@@ -3,810 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GATO IMPORT - Catálogo</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👠</text></svg>">
+  <title>Catálogo de Productos</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+    body { background: #f8f9fa; padding: 12px; max-width: 1280px; margin: 0 auto; }
+    h1 { text-align: center; color: #2d3748; margin-bottom: 12px; font-size: 22px; padding-top: 5px; }
+    .contenedor { display: flex; flex-wrap: wrap; gap: 18px; }
+    
+    .lista-productos { flex: 1 1 320px; background: white; border-radius: 10px; padding: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); max-height: 88vh; overflow-y: auto; }
+    .buscador { width: 100%; padding: 10px 14px; margin-bottom: 14px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 15px; outline: none; transition: border-color 0.2s; }
+    .buscador:focus { border-color: #2563eb; }
+    .titulo-lista { font-size: 16px; margin-bottom: 12px; color: #1a202c; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+    .contador-productos { font-size: 14px; color: #2563eb; font-weight: 600; }
+    
+    .producto-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin: 5px 0; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; border-left: 4px solid transparent; background: #fefefe; min-height: 68px; }
+    .producto-item:hover { background: #bfdbfe; border-left-color: #2563eb; }
+    .producto-item.activo { background: #93c5fd; border-left-color: #1d4ed8; font-weight: 600; }
+    .producto-foto { width: 52px; height: 52px; object-fit: cover; border-radius: 6px; border: 1px solid #e2e8f0; background: #f7fafc; flex-shrink: 0; }
+    .producto-info { flex: 1; }
+    .producto-nombre { font-size: 14.5px; color: #2d3748; line-height: 1.2; }
+    .producto-precio { font-size: 13.5px; color: #2b6cb0; margin-top: 2px; font-weight: 600; }
 
-    :root {
-      --fondo-pagina: #f8f9fa;
-      --fondo-tarjeta: #ffffff;
-      --texto-primario: #1e293b;
-      --texto-secundario: #475569;
-      --borde-logo: #0891b2;
-      --borde-logo-fondo: #cffafe;
-      --borde-item: #e2e8f0;
-      --borde-item-hover: #0891b2;
-      --fondo-item-hover: #cffafe;
-      --fondo-item-seleccionado: #cffafe;
-      --franja-azul: #0891b2;
-      --borde-detalle: #0891b2;
-      --fondo-descripcion: #f8f9fa;
-      --sombra: rgba(0,0,0,0.08);
-      --sombra-hover: rgba(0,0,0,0.12);
-      --cian-oscuro: #0891b2;
-      --celeste-claro: #cffafe;
-      --flecha-fondo: rgba(0,0,0,0.4);
-      --flecha-hover: rgba(0,0,0,0.6);
-    }
+    .vista-fotos { flex: 2 1 540px; background: white; border-radius: 10px; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+    .fila-principal { display: flex; gap: 16px; margin-bottom: 14px; align-items: flex-start; flex-wrap: wrap; }
+    .foto-principal { flex: 1 1 280px; min-width: 260px; height: 340px; object-fit: contain; border-radius: 8px; background: #f7fafc; border: 1px solid #e2e8f0; }
+    .caja-derecha { flex: 1 1 220px; display: flex; flex-direction: column; gap: 14px; }
+    .info-producto { display: flex; flex-direction: column; gap: 8px; }
+    .info-producto h2 { color: #1a202c; font-size: 20px; line-height: 1.3; }
+    .precio { font-size: 26px; color: #2b6cb0; font-weight: bold; }
+    .descripcion { color: #4a5568; line-height: 1.6; font-size: 14.5px; }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --fondo-pagina: #0f172a;
-        --fondo-tarjeta: #1e293b;
-        --texto-primario: #f1f5f9;
-        --texto-secundario: #cbd5e1;
-        --borde-logo: #22d3ee;
-        --borde-logo-fondo: #164e63;
-        --borde-item: #334155;
-        --borde-item-hover: #22d3ee;
-        --fondo-item-hover: #1e293b;
-        --fondo-item-seleccionado: #1e293b;
-        --franja-azul: #22d3ee;
-        --borde-detalle: #22d3ee;
-        --fondo-descripcion: #334155;
-        --sombra: rgba(0,0,0,0.3);
-        --sombra-hover: rgba(0,0,0,0.4);
-        --cian-oscuro: #155e75;
-        --celeste-claro: #164e63;
-        --flecha-fondo: rgba(0,0,0,0.5);
-        --flecha-hover: rgba(0,0,0,0.7);
-      }
-    }
+    .btn-whatsapp { display: inline-flex; align-items: center; justify-content: center; gap: 9px; background: #25D366; color: white; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 16px; transition: transform 0.2s, box-shadow 0.2s; border: none; cursor: pointer; width: 100%; }
+    .btn-whatsapp:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(37,211,102,0.35); }
+    .logo-whatsapp { width: 22px; height: 22px; object-fit: contain; display: block; }
 
-    body {
-      background: var(--fondo-pagina);
-      padding: 5px;
-      max-width: 800px;
-      margin: 0 auto;
-      transition: background 0.3s ease;
-    }
+    .galeria { display: flex; gap: 8px; overflow-x: auto; padding: 6px 0 8px; scrollbar-width: thin; }
+    .galeria::-webkit-scrollbar { height: 4px; }
+    .galeria::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 2px; }
+    .galeria-foto { width: 72px; height: 72px; object-fit: cover; border-radius: 5px; cursor: pointer; border: 3px solid transparent; transition: all 0.2s; background: #edf2f7; flex-shrink: 0; }
+    .galeria-foto:hover, .galeria-foto.activa { border-color: #3182ce; transform: scale(1.05); }
 
-    .encabezado-tienda {
-      background: var(--cian-oscuro);
-      color: white;
-      padding: 8px 15px;
-      border-radius: 12px;
-      margin-bottom: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      min-height: 55px;
-      position: relative;
-      z-index: 2;
-    }
     .cargando { text-align: center; padding: 40px; color: #4a5568; font-size: 18px; }
     .error { text-align: center; padding: 40px; color: #dc2626; font-size: 16px; }
 
-    .tabla-productos { margin-top: 18px; background: white; border-radius: 10px; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
-    .titulo-tabla { color: #1a202c; font-size: 18px; margin-bottom: 12px; }
-    .tabla-contenedor { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; min-width: 620px; }
-    th, td { padding: 11px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #4a5568; font-size: 14px; }
-    th { background: #eff6ff; color: #1e3a8a; font-weight: 700; }
-    tbody tr { cursor: pointer; transition: background 0.2s; }
-    tbody tr:hover, tbody tr.activo { background: #dbeafe; }
-    td:first-child { color: #2563eb; font-weight: 600; }
-    .tabla-vacia { padding: 18px 0; color: #718096; text-align: center; }
-
-    .icono-zapato {
-      font-size: 34px;
-      line-height: 1;
-      flex-shrink: 0;
-      filter: drop-shadow(0 0 8px rgba(255,255,255,0.25));
-      position: relative;
-      z-index: 3;
-    }
-
-    .titulo-tienda {
-      position: absolute;
-      left: 80px;
-      right: 130px;
-      padding: 0;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .titulo-principal {
-      font-size: 22px;
-      font-weight: bold;
-      letter-spacing: 2px;
-      line-height: 1.2;
-    }
-
-    .titulo-secundario {
-      font-size: 13px;
-      opacity: 0.9;
-      line-height: 1.2;
-    }
-
-    .logo-principal {
-      width: 112px;
-      height: 112px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border-radius: 50%;
-      border: 4px solid var(--borde-logo);
-      background: var(--borde-logo-fondo);
-      transition: all 0.3s ease;
-      flex-shrink: 0;
-      position: absolute;
-      right: 15px;
-      top: -5px;
-      z-index: 10;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .logo-principal img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    #pantallaLista { display: block; }
-    #pantallaDetalle { display: none; }
-    #pantallaMapa { display: none; }
-
-    .buscador {
-      width: calc(100% - 120px);
-      padding: 10px 12px;
-      margin: 0 auto 5px auto;
-      border: 2px solid var(--borde-item);
-      border-radius: 10px;
-      font-size: 16px;
-      outline: none;
-      transition: border-color 0.2s;
-      background: var(--fondo-tarjeta);
-      color: var(--texto-primario);
-      position: relative;
-      z-index: 1;
-      display: block;
-    }
-
-    .buscador:focus { border-color: var(--borde-item-hover); }
-
-    .contador-general {
-      font-size: 14px;
-      color: var(--cian-oscuro);
-      font-weight: 600;
-      margin: 0 auto 5px auto;
-      width: calc(100% - 120px);
-      text-align: left;
-    }
-
-    .contenedor-lista {
-      max-height: calc(100vh - 200px);
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding-right: 4px;
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-
-    .contenedor-lista::-webkit-scrollbar {
-      width: 8px;
-    }
-    .contenedor-lista::-webkit-scrollbar-track {
-      background: var(--fondo-pagina);
-      border-radius: 4px;
-    }
-    .contenedor-lista::-webkit-scrollbar-thumb {
-      background: var(--cian-oscuro);
-      border-radius: 4px;
-      opacity: 0.6;
-    }
-    .contenedor-lista::-webkit-scrollbar-thumb:hover {
-      background: var(--borde-item-hover);
-    }
-
-    .item-producto {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 14px;
-      margin: 6px 0;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      background: var(--fondo-tarjeta);
-      border: 2px solid var(--borde-item);
-      border-left: 5px solid var(--franja-azul);
-      min-height: 70px;
-      position: relative;
-      margin-left: 5px;
-      margin-right: 5px;
-      width: calc(100% - 10px);
-    }
-
-    .item-producto.seleccionado {
-      background: var(--fondo-item-seleccionado);
-      border-color: var(--borde-item);
-      box-shadow: none;
-    }
-
-    .item-producto:hover {
-      background: var(--fondo-item-hover);
-      border-color: var(--borde-item);
-      transform: translateX(3px);
-      box-shadow: 3px 3px 0 var(--borde-item-hover);
-    }
-
-    .item-foto {
-      width: 55px;
-      height: 55px;
-      object-fit: cover;
-      border-radius: 6px;
-      border: 2px solid var(--borde-item);
-      background: var(--fondo-pagina);
-      flex-shrink: 0;
-    }
-
-    .item-texto {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .item-nombre {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--texto-primario);
-      line-height: 1.3;
-    }
-
-    .item-precio {
-      font-size: 16px;
-      font-weight: bold;
-      color: #16a34a;
-      background: rgba(22, 163, 74, 0.1);
-      padding: 3px 12px;
-      border-radius: 12px;
-      white-space: nowrap;
-      align-self: flex-start;
-      line-height: 1.2;
-    }
-
-    .detalle-card {
-      background: var(--fondo-tarjeta);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 4px 16px var(--sombra);
-      position: relative;
-      overflow: hidden;
-      border-left: 5px solid var(--borde-detalle);
-      transition: all 0.3s ease;
-      margin: 0 10px;
-    }
-
-    .contenedor-foto {
-      position: relative;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .foto-principal {
-      width: 100%;
-      height: 350px;
-      object-fit: contain;
-      border-radius: 12px;
-      background: var(--fondo-pagina);
-      border: 2px solid var(--borde-item);
-      display: block;
-    }
-
-    .btn-flecha {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--flecha-fondo);
-      color: white;
-      border: none;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      z-index: 5;
-      backdrop-filter: blur(4px);
-    }
-
-    .btn-flecha:hover {
-      background: var(--flecha-hover);
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    .btn-flecha.izquierda {
-      left: 10px;
-    }
-
-    .btn-flecha.derecha {
-      right: 10px;
-    }
-
-    .galeria-miniaturas {
-      display: flex;
-      gap: 12px;
-      overflow-x: auto;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-    }
-
-    .miniatura {
-      width: 90px;
-      height: 90px;
-      object-fit: cover;
-      border-radius: 10px;
-      cursor: pointer;
-      border: 3px solid transparent;
-      transition: all 0.2s;
-      background: var(--fondo-pagina);
-    }
-
-    .miniatura:hover { border-color: var(--borde-item-hover); }
-    .miniatura.activa { border-color: var(--borde-detalle); box-shadow: 0 0 0 2px var(--borde-detalle); }
-
-    .detalle-precio {
-      font-size: 34px;
-      font-weight: bold;
-      color: #16a34a;
-      margin-bottom: 15px;
-    }
-
-    .detalle-descripcion {
-      font-size: 16px;
-      color: var(--texto-secundario);
-      line-height: 1.8;
-      margin-bottom: 25px;
-      padding: 15px;
-      background: var(--fondo-descripcion);
-      border-radius: 10px;
-      border-left: 4px solid var(--borde-detalle);
-    }
-
-    .btn-whatsapp {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: #25D366;
-      color: white;
-      text-decoration: none;
-      padding: 15px 24px;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 17px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      margin-bottom: 16px;
-    }
-
-    .btn-whatsapp:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-    }
-
-    .logo-whatsapp { width: 24px; height: 24px; }
-
-    .contenedor-botones-inferiores {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      gap: 10px;
-    }
-
-    .btn-regresar {
-      background: #dc2626;
-      color: white;
-      border: none;
-      padding: 14px 20px;
-      border-radius: 50px;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.2s, transform 0.2s;
-      font-weight: 600;
-      flex: 1;
-    }
-
-    .btn-regresar .flecha {
-      font-size: 18px;
-      font-weight: 900;
-      line-height: 1;
-      transform: scaleX(1.5);
-    }
-
-    .btn-regresar:hover {
-      background: #b91c1c;
-      transform: translateX(-3px);
-    }
-
-    .btn-ubicacion {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: var(--cian-oscuro);
-      color: white;
-      text-decoration: none;
-      padding: 14px 20px;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 16px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: none;
-      cursor: pointer;
-      flex: 1;
-    }
-
-    .btn-ubicacion:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 15px rgba(8, 145, 178, 0.4);
-    }
-
-    .icono-mapa { font-size: 20px; }
-
-    .mapa-card {
-      background: var(--fondo-tarjeta);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 4px 16px var(--sombra);
-      border-left: 5px solid var(--borde-detalle);
-      margin: 0 10px;
-      min-height: 85vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .mapa-titulo {
-      font-size: 20px;
-      font-weight: bold;
-      color: var(--texto-primario);
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
-    .mapa-direccion {
-      font-size: 15px;
-      color: var(--texto-secundario);
-      margin-bottom: 15px;
-      text-align: center;
-      padding: 10px;
-      background: var(--fondo-descripcion);
-      border-radius: 8px;
-    }
-
-    .mapa-iframe {
-      width: 100%;
-      height: 550px;
-      border-radius: 12px;
-      border: 2px solid var(--borde-item);
-      margin-bottom: 20px;
-      flex: 1;
-    }
-
-    .btn-abrir-mapa-externo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: var(--cian-oscuro);
-      color: white;
-      text-decoration: none;
-      padding: 14px 24px;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 16px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      margin-bottom: 12px;
-    }
-
-    .btn-abrir-mapa-externo:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 15px rgba(8, 145, 178, 0.4);
-    }
-
-    .btn-regresar-mapa {
-      background: #dc2626;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 50px;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.2s, transform 0.2s;
-      font-weight: 600;
-      width: 100%;
-    }
-
-    .btn-regresar-mapa .flecha {
-      font-size: 18px;
-      font-weight: 900;
-      line-height: 1;
-      transform: scaleX(1.5);
-    }
-
-    .btn-regresar-mapa:hover {
-      background: #b91c1c;
-      transform: translateX(-3px);
-    }
-
-    @media (max-width: 600px) {
-      body { padding: 3px; }
-
-      .encabezado-tienda {
-        padding: 6px 12px;
-        min-height: 52px;
-        margin-bottom: 2px;
-      }
-
-      .icono-zapato {
-        font-size: 28px;
-      }
-
-      .titulo-tienda {
-        left: 60px;
-        right: 110px;
-      }
-
-      .titulo-principal {
-        font-size: 18px;
-      }
-
-      .titulo-secundario {
-        font-size: 11px;
-      }
-
-      .logo-principal {
-        width: 90px;
-        height: 90px;
-        right: 10px;
-        top: -5px;
-      }
-
-      .buscador {
-        width: calc(100% - 100px);
-        padding: 10px 12px;
-        margin-bottom: 5px;
-      }
-
-      .contador-general {
-        width: calc(100% - 100px);
-        margin-bottom: 5px;
-      }
-
-      .contenedor-lista {
-        max-height: calc(100vh - 190px);
-        padding-left: 8px;
-        padding-right: 8px;
-      }
-
-      .item-producto {
-        padding: 10px 12px;
-        margin: 5px 0;
-        min-height: 65px;
-        margin-left: 3px;
-        margin-right: 3px;
-        width: calc(100% - 6px);
-      }
-
-      .item-foto {
-        width: 50px;
-        height: 50px;
-      }
-
-      .item-nombre { font-size: 14px; }
-      .item-precio { font-size: 15px; padding: 2px 10px; }
-
-      .detalle-card {
-        margin: 0 8px;
-        padding: 16px;
-      }
-
-      .foto-principal { height: 260px; }
-      .miniatura { width: 75px; height: 75px; }
-      .detalle-precio { font-size: 28px; }
-      .btn-whatsapp { padding: 13px 20px; font-size: 16px; }
-
-      .btn-flecha {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-      }
-
-      .btn-regresar, .btn-ubicacion {
-        font-size: 15px;
-        padding: 12px 16px;
-        gap: 6px;
-      }
-
-      .btn-regresar .flecha, .icono-mapa {
-        font-size: 16px;
-      }
-
-      .mapa-card {
-        margin: 0 8px;
-        padding: 16px;
-        min-height: 90vh;
-      }
-
-      .mapa-iframe {
-        height: 400px;
-      }
-
-      .mapa-titulo { font-size: 18px; }
-      .mapa-direccion { font-size: 14px; }
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      h1 { font-size: 20px; margin-bottom: 10px; }
+      .contenedor { gap: 12px; flex-direction: column; }
+      .fila-principal { flex-direction: column; gap: 14px; }
+      .foto-principal { height: 280px; width: 100%; }
+      .galeria-foto { width: 62px; height: 62px; }
+      .lista-productos { max-height: 340px; flex-basis: 100%; padding: 12px; }
+      .producto-foto { width: 48px; height: 48px; }
+      .producto-item { min-height: 65px; padding: 9px 11px; }
+      .btn-whatsapp { padding: 11px 22px; font-size: 15px; }
+      .logo-whatsapp { width: 20px; height: 20px; }
     }
   </style>
 </head>
 <body>
 
-<div class="encabezado-tienda">
-  <div class="icono-zapato">👠</div>
-  <div class="titulo-tienda">
-    <div class="titulo-principal">GATO IMPORT</div>
-    <div class="titulo-secundario">CATÁLOGO DE PRODUCTOS</div>
-  </div>
-  <div class="logo-principal">
-    <img src="https://i.postimg.cc/pVYRXx7T/log.jpg" alt="Logo Tienda">
-  </div>
-</div>
+<h1>📦 Catálogo de Productos</h1>
 
-<div id="pantallaLista">
-  <input type="text" id="buscador" class="buscador" placeholder="🔍 Buscar producto...">
-  <div class="contador-general" id="contadorGeneral">Producto 1/3</div>
-
-  <div id="contenedorLista" class="contenedor-lista">
-    <div id="listaProductos"></div>
-  </div>
-</div>
-
-<div id="pantallaDetalle">
-  <div class="detalle-card">
-    <div class="contenedor-foto">
-      <button class="btn-flecha izquierda" onclick="fotoAnterior()">‹</button>
-      <img id="fotoGrande" class="foto-principal" src="" alt="">
-      <button class="btn-flecha derecha" onclick="fotoSiguiente()">›</button>
+<div class="contenedor">
+  <div class="lista-productos">
+    <input type="text" id="buscador" class="buscador" placeholder="🔍 Buscar producto...">
+    <div class="titulo-lista">
+      <span>Productos</span>
+      <span class="contador-productos" id="contadorTexto">0 / 0</span>
     </div>
+    <div id="listaProductos"><div class="cargando">Cargando productos...</div></div>
+  </div>
 
-    <div id="galeriaMiniaturas" class="galeria-miniaturas"></div>
-
-    <div id="detallePrecio" class="detalle-precio"></div>
-    <p id="detalleDescripcion" class="detalle-descripcion"></p>
-
-    <a id="btnWhatsApp" class="btn-whatsapp" href="" target="_blank" rel="noopener noreferrer">
-      <img src="https://i.postimg.cc/63HQcgF6/pngegg.png" alt="WhatsApp" class="logo-whatsapp">
-      Consultar por WhatsApp
-    </a>
-
-    <div class="contenedor-botones-inferiores">
-      <button class="btn-regresar" onclick="regresarLista()"><span class="flecha">←</span> Regresar</button>
-      <button class="btn-ubicacion" onclick="abrirPantallaMapa()"><span class="icono-mapa">📍</span> Ubícanos</button>
+  <div class="vista-fotos">
+    <div class="fila-principal">
+      <img id="fotoPrincipal" class="foto-principal" src="" alt="Foto del producto">
+      <div class="caja-derecha">
+        <div class="info-producto">
+          <h2 id="nombreProducto"></h2>
+          <p id="precioProducto" class="precio"></p>
+          <p id="descripcionProducto" class="descripcion"></p>
+        </div>
+        <a id="btnWhatsApp" class="btn-whatsapp" href="#" target="_blank">
+          <img src="AQUÍ_ENLACE_DE_TU_LOGO_WHATSAPP.png" alt="WhatsApp" class="logo-whatsapp">
+          Pedir por WhatsApp
+        </a>
+      </div>
     </div>
+    <div class="galeria" id="galeria"></div>
   </div>
 </div>
-
-<div id="pantallaMapa">
-  <div class="mapa-card">
-    <h2 class="mapa-titulo">📍 Gato Import</h2>
-    <p class="mapa-direccion">Tomas Moscoso 994 — El Porvenir, Trujillo, La Libertad, Perú</p>
-
-    <iframe
-      class="mapa-iframe"
-      loading="lazy"
-      src="https://www.google.com/maps?q=-8.078923,-79.004814&hl=es&z=17&output=embed">
-    </iframe>
-
-    <a class="btn-abrir-mapa-externo"
-       href="geo:-8.078923,-79.004814?q=-8.078923,-79.004814(Gato+Import,+Tomas+Moscoso+994,+El+Porvenir,+Trujillo,+Per%C3%BA)"
-       target="_blank"
-       rel="noopener noreferrer">
-      <span class="icono-mapa">🗺️</span>
-      Abrir en Google Maps
-    </a>
-
-    <button class="btn-regresar-mapa" onclick="regresarDesdeMapa()">
-      <span class="flecha">←</span> Regresar
-    </button>
-  </div>
-</div>
-
-<section class="tabla-productos" aria-labelledby="tituloTabla">
-  <h2 id="tituloTabla" class="titulo-tabla">Tabla de productos</h2>
-  <div class="tabla-contenedor">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Producto</th>
-          <th>Precio</th>
-          <th>Descripción</th>
-        </tr>
-      </thead>
-      <tbody id="tablaProductos"></tbody>
-    </table>
-  </div>
-</section>
 
 <script>
 // ==================================================
-// 📋 CSV DE RESPALDO — fuente.csv es la fuente principal
+// 📂 CONFIGURACIÓN — PON AQUÍ TU ENLACE DE GOOGLE SHEETS
 // ==================================================
-const TEXTO_CSV = `
-id,nombre,precio,descripcion,telefono,foto1,foto2,foto3,foto4,foto5,foto6
-1,Zapato de Tacón Negro,S/ 89.00,Elegante zapato de tacón negro, ideal para eventos y ocasiones especiales. Material de cuero, tacón de 9cm.,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,https://i.postimg.cc/5tz4LjS3/0021.jpg,https://i.postimg.cc/Xv5jdXkm/0022.jpg,https://i.postimg.cc/d0CsrDjg/0023.jpg,,
-2,Zapato de Tacón Beige,S/ 95.00,Zapato de tacón color beige, muy versátil. Combina con todo tipo de vestimenta. Tacón de 8cm.,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,https://i.postimg.cc/5tz4LjS3/0021.jpg,,,
-3,Zapato de Tacón Rojo,S/ 105.00,Zapato de tacón rojo llamativo, para destacar en cualquier evento. Tacón de 10cm, suave y cómodo.,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,https://i.postimg.cc/5tz4LjS3/0021.jpg,https://i.postimg.cc/Xv5jdXkm/0022.jpg,,,
-4,Adorno 004,S/ 45.00,Descripción del producto 4,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,,,
-5,Adorno 005,S/ 55.00,Descripción del producto 5,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,,,
-6,Adorno 006,S/ 65.00,Descripción del producto 6,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,,,
-7,Adorno 007,S/ 75.00,Descripción del producto 7,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,,,
-8,Adorno 008,S/ 85.00,Descripción del producto 8,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,,,
-`;
-
-const CSV_DE_RESPALDO = `
-id,nombre,precio,descripcion,telefono,foto1,foto2,foto3,foto4,foto5,foto6,foto7
-1,Adorno 002,125,Adorno dorado en forma de corazón,925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,https://i.postimg.cc/5tz4LjS3/0021.jpg,https://i.postimg.cc/Xv5jdXkm/0022.jpg,https://i.postimg.cc/d0CsrDjg/0023.jpg,,,
-2,Adorno 003,120,Adorno dorado en forma de cuadrado,925033823,https://i.postimg.cc/5tz4LjS3/0021.jpg,https://i.postimg.cc/Xv5jdXkm/0022.jpg,https://i.postimg.cc/d0CsrDjg/0023.jpg,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,
-3,Adorno 004,125,Adorno dorado en forma de corazón,925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,https://i.postimg.cc/5tz4LjS3/0021.jpg,https://i.postimg.cc/Xv5jdXkm/0022.jpg,https://i.postimg.cc/d0CsrDjg/0023.jpg,,,
-4,Adorno 005,120,Adorno dorado en forma de cuadrado doble,925033823,https://i.postimg.cc/5tz4LjS3/0021.jpg,https://i.postimg.cc/Xv5jdXkm/0022.jpg,https://i.postimg.cc/d0CsrDjg/0023.jpg,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,
-`;
-`;
+const URL_HOJA_CALCULO = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSAWM2wRo0Lr0x7wFVue67JF9FG-aEsgmL11exIwx9usx_FNyieC1jji24w-NYG-8WAQ409SzdPcfeG/pubhtml?gid=0&single=true";
 
 let productos = [];
-let productosFiltrados = [];
-let productoActual = null;
+let productoActivo = null;
 let indiceFotoActual = 0;
-let intervaloCarrusel = null;
-let pantallaAnterior = 'lista';
+let intervaloCambio = null;
+let usuarioInteractuo = false;
+const TIEMPO_CAMBIO = 3000;
+let productosFiltrados = [];
 
-// 📂 LEER CSV PEGADO ARRIBA
-function cargarProductos() {
-  fetch('fuente.csv', { cache: 'no-store' })
-    .then(respuesta => {
-      if (!respuesta.ok) throw new Error(`No se pudo abrir fuente.csv (${respuesta.status})`);
-      return respuesta.text();
-    })
-    .then(textoCSV => inicializarProductos(textoCSV.trim() ? textoCSV : CSV_DE_RESPALDO))
-    .catch(error => {
-      console.warn('No se pudo leer fuente.csv. Se usará el CSV de respaldo.', error);
-      inicializarProductos(CSV_DE_RESPALDO);
-    });
-}
-
-function inicializarProductos(textoCSV) {
+// 📂 LEER DESDE HOJA DE CÁLCULO (CSV)
+async function cargarProductosDesdeHoja() {
   try {
-    productos = parsearCSV(textoCSV);
+    const respuesta = await fetch(URL_HOJA_CALCULO);
+    if (!respuesta.ok) throw new Error('No se pudo cargar la hoja');
+    const texto = await respuesta.text();
+    productos = parsearCSV(texto);
     productosFiltrados = [...productos];
     document.getElementById('contadorTexto').textContent = `0 / ${productos.length}`;
     cargarLista();
-    cargarTabla();
     if (productos.length > 0) {
       setTimeout(() => {
         const primerElemento = document.querySelector('.producto-item');
@@ -816,11 +127,10 @@ function inicializarProductos(textoCSV) {
   } catch (error) {
     document.getElementById('listaProductos').innerHTML = `
       <div class="error">
-        ⚠️ Error al leer los datos.<br>
-        Verifica que fuente.csv esté bien escrito.
+        ⚠️ No se pudo cargar la hoja de cálculo<br>
+        Verifica que el enlace esté bien y la hoja esté publicada.
       </div>
     `;
-    document.getElementById('tablaProductos').innerHTML = '';
     console.error('Error:', error);
   }
 }
@@ -830,200 +140,36 @@ function parsearCSV(texto) {
   const lineas = texto.trim().split('\n');
   const encabezados = lineas[0].split(',').map(e => e.trim().toLowerCase());
   const lista = [];
-
+  
   for (let i = 1; i < lineas.length; i++) {
     const valores = lineas[i].split(',').map(v => v.trim());
     const prod = {};
     encabezados.forEach((enc, idx) => prod[enc] = valores[idx] || '');
-
+    
+    // Recopilar todas las columnas de fotos (foto1, foto2, foto3...)
     prod.fotos = [];
     let colFoto = 1;
     while (prod[`foto${colFoto}`] && prod[`foto${colFoto}`] !== '') {
       prod.fotos.push(prod[`foto${colFoto}`]);
       colFoto++;
     }
-
+    
     lista.push(prod);
   }
   return lista;
 }
 
-function mostrarLista() {
-  const lista = document.getElementById('listaProductos');
-  lista.innerHTML = '';
-
-  productosFiltrados.forEach((prod, index) => {
-    const div = document.createElement('div');
-    div.className = 'item-producto';
-    div.dataset.id = prod.id;
-
-    if (productoActual && productoActual.id === prod.id) {
-      div.classList.add('seleccionado');
-    }
-
-    div.innerHTML = `
-      <img src="${prod.fotos[0] || ''}" class="item-foto" alt="${prod.nombre}">
-      <div class="item-texto">
-        <span class="item-nombre">${prod.nombre || 'Sin nombre'}</span>
-        <span class="item-precio">${prod.precio || ''}</span>
-      </div>
-    `;
-
-    div.onclick = () => {
-      seleccionarUnProducto(prod);
-      abrirDetalle(prod, index + 1);
-    };
-
-    lista.appendChild(div);
-  });
-
-  document.getElementById('contadorGeneral').textContent = `Producto ${productosFiltrados.length > 0 ? '1' : '0'}/${productosFiltrados.length}`;
-}
-
-function seleccionarUnProducto(prod) {
-  productoActual = prod;
-
-  document.querySelectorAll('.item-producto').forEach(item => {
-    item.classList.remove('seleccionado');
-  });
-
-  const itemSeleccionado = document.querySelector(`.item-producto[data-id="${prod.id}"]`);
-  if (itemSeleccionado) {
-    itemSeleccionado.classList.add('seleccionado');
-  }
-}
-
-function iniciarCarrusel() {
-  detenerCarrusel();
-  indiceFotoActual = 0;
-
-  if (!productoActual || productoActual.fotos.length <= 1) return;
-
-  intervaloCarrusel = setInterval(() => {
-    indiceFotoActual++;
-    if (indiceFotoActual >= productoActual.fotos.length) {
-      indiceFotoActual = 0;
-    }
-    cambiarFotoPrincipal(productoActual.fotos[indiceFotoActual], indiceFotoActual);
-  }, 4000); // ⏱️ Cambia cada 4 segundos
-}
-
-function detenerCarrusel() {
-  if (intervaloCarrusel) {
-    clearInterval(intervaloCarrusel);
-    intervaloCarrusel = null;
-  }
-}
-
-function fotoAnterior() {
-  if (!productoActual || productoActual.fotos.length === 0) return;
-  detenerCarrusel();
-  indiceFotoActual--;
-  if (indiceFotoActual < 0) {
-    indiceFotoActual = productoActual.fotos.length - 1;
-  }
-  cambiarFotoPrincipal(productoActual.fotos[indiceFotoActual], indiceFotoActual);
-}
-
-function fotoSiguiente() {
-  if (!productoActual || productoActual.fotos.length === 0) return;
-  detenerCarrusel();
-  indiceFotoActual++;
-  if (indiceFotoActual >= productoActual.fotos.length) {
-    indiceFotoActual = 0;
-  }
-  cambiarFotoPrincipal(productoActual.fotos[indiceFotoActual], indiceFotoActual);
-}
-
-function abrirDetalle(prod, numero) {
-  productoActual = prod;
-  indiceFotoActual = 0;
-  pantallaAnterior = 'lista';
-
-  document.getElementById('pantallaLista').style.display = 'none';
-  document.getElementById('pantallaDetalle').style.display = 'block';
-  document.getElementById('pantallaMapa').style.display = 'none';
-
-  document.getElementById('detallePrecio').textContent = prod.precio || '';
-  document.getElementById('detalleDescripcion').textContent = prod.descripcion || '';
-
-  const fotoPrincipal = prod.fotos[0] || '';
-  document.getElementById('fotoGrande').src = fotoPrincipal;
-
-  const galeria = document.getElementById('galeriaMiniaturas');
-  galeria.innerHTML = '';
-  prod.fotos.forEach((foto, index) => {
-    const img = document.createElement('img');
-    img.src = foto;
-    img.className = `miniatura ${index === 0 ? 'activa' : ''}`;
-    img.onclick = () => {
-      detenerCarrusel();
-      cambiarFotoPrincipal(foto, index);
-    };
-    galeria.appendChild(img);
-  });
-
-  const tel = prod.telefono || '51925033823';
-  const mensaje = encodeURIComponent(`Hola, me interesa el producto: ${prod.nombre} — ${prod.precio} ¿Está disponible?`);
-  document.getElementById('btnWhatsApp').href = `https://wa.me/${tel}?text=${mensaje}`;
-
-  iniciarCarrusel();
-  window.scrollTo(0, 0);
-}
-
-function cambiarFotoPrincipal(foto, indiceActiva) {
-  if (!productoActual) return;
-
-  document.getElementById('fotoGrande').src = foto;
-  indiceFotoActual = indiceActiva;
-
-  const miniaturas = document.querySelectorAll('.miniatura');
-  miniaturas.forEach((m, i) => {
-    if (i === indiceActiva) m.classList.add('activa');
-    else m.classList.remove('activa');
-  });
-}
-
-function regresarLista() {
-  detenerCarrusel();
-  document.getElementById('pantallaDetalle').style.display = 'none';
-  document.getElementById('pantallaMapa').style.display = 'none';
-  document.getElementById('pantallaLista').style.display = 'block';
-  mostrarLista();
-  window.scrollTo(0, 0);
-}
-
-function abrirPantallaMapa() {
-  pantallaAnterior = 'detalle';
-  detenerCarrusel();
-  document.getElementById('pantallaLista').style.display = 'none';
-  document.getElementById('pantallaDetalle').style.display = 'none';
-  document.getElementById('pantallaMapa').style.display = 'block';
-  window.scrollTo(0, 0);
-}
-
-function regresarDesdeMapa() {
-  if (pantallaAnterior === 'detalle' && productoActual) {
-    document.getElementById('pantallaMapa').style.display = 'none';
-    document.getElementById('pantallaDetalle').style.display = 'block';
-    iniciarCarrusel();
-  } else {
-    regresarLista();
-  }
-  window.scrollTo(0, 0);
-}
-
+// 🔍 BUSCADOR
 function configurarBuscador() {
   const buscador = document.getElementById('buscador');
   buscador.addEventListener('input', (e) => {
     const texto = e.target.value.toLowerCase().trim();
-    productosFiltrados = productos.filter(prod =>
-      (prod.nombre && prod.nombre.toLowerCase().includes(texto)) ||
+    productosFiltrados = productos.filter(prod => 
+      (prod.nombre && prod.nombre.toLowerCase().includes(texto)) || 
       (prod.precio && prod.precio.toLowerCase().includes(texto))
     );
     cargarLista();
-    cargarTabla();
-
+    
     if (productoActivo) {
       const sigueVisible = productosFiltrados.find(p => p.id === productoActivo.id);
       if (!sigueVisible && productosFiltrados.length > 0) {
@@ -1036,20 +182,6 @@ function configurarBuscador() {
   });
 }
 
-function iniciar() {
-  productos = parsearCSV(TEXTO_CSV);
-  productosFiltrados = [...productos];
-  cargarLista();
-  cargarTabla();
-  if (productos.length > 0) {
-    const primerElemento = document.querySelector('.producto-item');
-    if (primerElemento) seleccionarProducto(productos[0], primerElemento);
-  } else {
-    limpiarVista();
-    actualizarContador(0);
-  }
-}
-
 function limpiarVista() {
   document.getElementById('nombreProducto').textContent = '';
   document.getElementById('precioProducto').textContent = '';
@@ -1058,7 +190,6 @@ function limpiarVista() {
   document.getElementById('galeria').innerHTML = '';
   detenerAutoCambio();
   productoActivo = null;
-  actualizarFilaTabla();
 }
 
 function actualizarContador(indiceSeleccionado) {
@@ -1095,39 +226,6 @@ function cargarLista() {
   }
 }
 
-function cargarTabla() {
-  const tabla = document.getElementById('tablaProductos');
-  tabla.innerHTML = '';
-
-  if (!productosFiltrados.length) {
-    tabla.innerHTML = '<tr><td colspan="4" class="tabla-vacia">No se encontraron productos.</td></tr>';
-    return;
-  }
-
-  productosFiltrados.forEach((prod) => {
-    const fila = document.createElement('tr');
-    fila.dataset.id = prod.id;
-    fila.innerHTML = `
-      <td>${prod.id || ''}</td>
-      <td>${prod.nombre || 'Sin nombre'}</td>
-      <td>${prod.precio || ''}</td>
-      <td>${prod.descripcion || ''}</td>
-    `;
-    fila.onclick = function() {
-      usuarioInteractuo = false;
-      seleccionarProducto(prod, null);
-    };
-    tabla.appendChild(fila);
-  });
-  actualizarFilaTabla();
-}
-
-function actualizarFilaTabla() {
-  document.querySelectorAll('#tablaProductos tr[data-id]').forEach(fila => {
-    fila.classList.toggle('activo', productoActivo && fila.dataset.id === productoActivo.id);
-  });
-}
-
 function seleccionarProducto(prod, elemento) {
   detenerAutoCambio();
   productoActivo = prod;
@@ -1138,7 +236,6 @@ function seleccionarProducto(prod, elemento) {
   
   document.querySelectorAll('.producto-item').forEach(el => el.classList.remove('activo'));
   if (elemento) elemento.classList.add('activo');
-  actualizarFilaTabla();
   
   document.getElementById('nombreProducto').textContent = prod.nombre || '';
   document.getElementById('precioProducto').textContent = prod.precio || '';
@@ -1197,9 +294,10 @@ function detenerAutoCambio() {
 
 async function iniciarPagina() {
   configurarBuscador();
+  await cargarProductosDesdeHoja();
 }
 
-document.addEventListener('DOMContentLoaded', iniciar);
+document.addEventListener('DOMContentLoaded', iniciarPagina);
 </script>
 
 </body>
