@@ -46,6 +46,17 @@
     .cargando { text-align: center; padding: 40px; color: #4a5568; font-size: 18px; }
     .error { text-align: center; padding: 40px; color: #dc2626; font-size: 16px; }
 
+    .tabla-productos { margin-top: 18px; background: white; border-radius: 10px; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+    .titulo-tabla { color: #1a202c; font-size: 18px; margin-bottom: 12px; }
+    .tabla-contenedor { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 620px; }
+    th, td { padding: 11px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #4a5568; font-size: 14px; }
+    th { background: #eff6ff; color: #1e3a8a; font-weight: 700; }
+    tbody tr { cursor: pointer; transition: background 0.2s; }
+    tbody tr:hover, tbody tr.activo { background: #dbeafe; }
+    td:first-child { color: #2563eb; font-weight: 600; }
+    .tabla-vacia { padding: 18px 0; color: #718096; text-align: center; }
+
     @media (max-width: 768px) {
       body { padding: 10px; }
       h1 { font-size: 20px; margin-bottom: 10px; }
@@ -94,11 +105,28 @@
   </div>
 </div>
 
+<section class="tabla-productos" aria-labelledby="tituloTabla">
+  <h2 id="tituloTabla" class="titulo-tabla">Tabla de productos</h2>
+  <div class="tabla-contenedor">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody id="tablaProductos"></tbody>
+    </table>
+  </div>
+</section>
+
 <script>
 // ==================================================
-// 📋 TU CSV AQUÍ — PEGA TODAS TUS LÍNEAS DEBAJO
+// 📋 CSV DE RESPALDO — fuente.csv es la fuente principal
 // ==================================================
-const TEXTO_CSV = `
+const CSV_DE_RESPALDO = `
 id,nombre,precio,descripcion,telefono,foto1,foto2,foto3,foto4,foto5,foto6,foto7
 1,Adorno 002,125,Adorno dorado en forma de corazón,925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,https://i.postimg.cc/5tz4LjS3/0021.jpg,https://i.postimg.cc/Xv5jdXkm/0022.jpg,https://i.postimg.cc/d0CsrDjg/0023.jpg,,,
 2,Adorno 003,120,Adorno dorado en forma de cuadrado,925033823,https://i.postimg.cc/5tz4LjS3/0021.jpg,https://i.postimg.cc/Xv5jdXkm/0022.jpg,https://i.postimg.cc/d0CsrDjg/0023.jpg,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,
@@ -119,11 +147,25 @@ let productosFiltrados = [];
 
 // 📂 LEER CSV PEGADO ARRIBA
 function cargarProductos() {
+  fetch('fuente.csv', { cache: 'no-store' })
+    .then(respuesta => {
+      if (!respuesta.ok) throw new Error(`No se pudo abrir fuente.csv (${respuesta.status})`);
+      return respuesta.text();
+    })
+    .then(textoCSV => inicializarProductos(textoCSV.trim() ? textoCSV : CSV_DE_RESPALDO))
+    .catch(error => {
+      console.warn('No se pudo leer fuente.csv. Se usará el CSV de respaldo.', error);
+      inicializarProductos(CSV_DE_RESPALDO);
+    });
+}
+
+function inicializarProductos(textoCSV) {
   try {
-    productos = parsearCSV(TEXTO_CSV);
+    productos = parsearCSV(textoCSV);
     productosFiltrados = [...productos];
     document.getElementById('contadorTexto').textContent = `0 / ${productos.length}`;
     cargarLista();
+    cargarTabla();
     if (productos.length > 0) {
       setTimeout(() => {
         const primerElemento = document.querySelector('.producto-item');
@@ -134,9 +176,10 @@ function cargarProductos() {
     document.getElementById('listaProductos').innerHTML = `
       <div class="error">
         ⚠️ Error al leer los datos.<br>
-        Verifica que el CSV esté bien escrito.
+        Verifica que fuente.csv esté bien escrito.
       </div>
     `;
+    document.getElementById('tablaProductos').innerHTML = '';
     console.error('Error:', error);
   }
 }
@@ -175,7 +218,8 @@ function configurarBuscador() {
       (prod.precio && prod.precio.toLowerCase().includes(texto))
     );
     cargarLista();
-    
+    cargarTabla();
+
     if (productoActivo) {
       const sigueVisible = productosFiltrados.find(p => p.id === productoActivo.id);
       if (!sigueVisible && productosFiltrados.length > 0) {
@@ -196,6 +240,7 @@ function limpiarVista() {
   document.getElementById('galeria').innerHTML = '';
   detenerAutoCambio();
   productoActivo = null;
+  actualizarFilaTabla();
 }
 
 function actualizarContador(indiceSeleccionado) {
@@ -232,6 +277,39 @@ function cargarLista() {
   }
 }
 
+function cargarTabla() {
+  const tabla = document.getElementById('tablaProductos');
+  tabla.innerHTML = '';
+
+  if (!productosFiltrados.length) {
+    tabla.innerHTML = '<tr><td colspan="4" class="tabla-vacia">No se encontraron productos.</td></tr>';
+    return;
+  }
+
+  productosFiltrados.forEach((prod) => {
+    const fila = document.createElement('tr');
+    fila.dataset.id = prod.id;
+    fila.innerHTML = `
+      <td>${prod.id || ''}</td>
+      <td>${prod.nombre || 'Sin nombre'}</td>
+      <td>${prod.precio || ''}</td>
+      <td>${prod.descripcion || ''}</td>
+    `;
+    fila.onclick = function() {
+      usuarioInteractuo = false;
+      seleccionarProducto(prod, null);
+    };
+    tabla.appendChild(fila);
+  });
+  actualizarFilaTabla();
+}
+
+function actualizarFilaTabla() {
+  document.querySelectorAll('#tablaProductos tr[data-id]').forEach(fila => {
+    fila.classList.toggle('activo', productoActivo && fila.dataset.id === productoActivo.id);
+  });
+}
+
 function seleccionarProducto(prod, elemento) {
   detenerAutoCambio();
   productoActivo = prod;
@@ -242,6 +320,7 @@ function seleccionarProducto(prod, elemento) {
   
   document.querySelectorAll('.producto-item').forEach(el => el.classList.remove('activo'));
   if (elemento) elemento.classList.add('activo');
+  actualizarFilaTabla();
   
   document.getElementById('nombreProducto').textContent = prod.nombre || '';
   document.getElementById('precioProducto').textContent = prod.precio || '';
