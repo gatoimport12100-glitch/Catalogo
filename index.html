@@ -43,7 +43,7 @@
       padding: 4px 10px;
       border-radius: 10px;
       margin: 5px;
-      margin-bottom: 0; /* ✅ SIN MARGEN ABAJO — pegado al buscador */
+      margin-bottom: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -58,11 +58,11 @@
       width: var(--tamano-logo);
       height: var(--tamano-logo);
       border-radius: 50%;
-      border: 3px solid var(--color-primario); /* ✅ MISMO COLOR QUE LA BARRA */
+      border: 3px solid var(--color-primario);
       background: var(--borde-logo-fondo);
       position: absolute;
       left: 6px;
-      top: 0; /* ✅ BORDE SUPERIOR = BORDE SUPERIOR DE LA BARRA */
+      top: 0;
       transform: translateY(0);
       overflow: hidden;
       z-index: 3;
@@ -91,11 +91,11 @@
       width: var(--tamano-logo);
       height: var(--tamano-logo);
       border-radius: 50%;
-      border: 3px solid var(--color-primario); /* ✅ MISMO COLOR DE BORDE */
+      border: 3px solid var(--color-primario);
       background: var(--borde-logo-fondo);
       position: absolute;
       right: 6px;
-      top: 0; /* ✅ MISMO NIVEL SUPERIOR QUE LA BARRA */
+      top: 0;
       transform: translateY(0);
       overflow: hidden;
       z-index: 3;
@@ -111,7 +111,7 @@
       width: 55%;
       max-width: 300px;
       padding: 5px 10px;
-      margin: 8px auto 6px; /* ✅ MUY POCO ESPACIO ARRIBA — pegado arriba */
+      margin: 8px auto 6px;
       border: 2px solid var(--borde-item);
       border-radius: 10px;
       font-size: 13px;
@@ -180,70 +180,74 @@
       color: var(--verde);
     }
 
-    /* ===== SEGUNDA PANTALLA ===== */
+    /* ===== SEGUNDA PANTALLA — IMAGEN MÁS GRANDE ===== */
     #pantallaDetalle {
       display: none; flex-direction: column; min-height: 100vh;
     }
     .detalle-card {
-      background: var(--fondo-tarjeta); border-radius: 16px; padding: 8px; margin: 5px;
+      background: var(--fondo-tarjeta); border-radius: 16px; padding: 12px; margin: 5px;
       border-left: 5px solid #0066ff;
       display: flex; flex-direction: column;
       min-height: 100vh;
     }
+    /* ✅ IMAGEN MÁS GRANDE — 50vh, sin límite de altura */
     .contenedor-foto {
       position: relative;
-      height: 34vh;
-      min-height: 180px;
-      max-height: 400px;
-      margin-bottom: 6px; border-radius: 14px; overflow: hidden;
+      height: 50vh; /* ⬅️ MÁS GRANDE: antes 34vh */
+      min-height: 260px; /* ⬅️ Más alto */
+      max-height: none; /* ⬅️ Sin límite máximo */
+      margin-bottom: 12px; /* ⬅️ Más espacio abajo */
+      border-radius: 14px; overflow: hidden;
       background: var(--fondo-pagina); width: 100%;
       flex-shrink: 0;
     }
     .foto-principal { width: 100%; height: 100%; object-fit: contain; }
     .btn-flecha {
       position: absolute; top: 50%; transform: translateY(-50%);
-      width: 38px; height: 38px;
+      width: 42px; height: 42px; /* ⬅️ Flechas un poquito más grandes */
       border-radius: 50%;
       background: rgba(0,0,0,0.5); color: #fff; border: none;
-      font-size: 20px; cursor: pointer; z-index: 2;
+      font-size: 22px; cursor: pointer; z-index: 2;
     }
-    .btn-flecha.izquierda { left: 6px; }
-    .btn-flecha.derecha { right: 6px; }
+    .btn-flecha.izquierda { left: 8px; }
+    .btn-flecha.derecha { right: 8px; }
     .galeria-miniaturas {
-      display: flex; gap: 5px; overflow-x: auto;
-      margin-bottom: 5px;
-      padding-bottom: 2px; flex-shrink: 0;
+      display: flex; gap: 8px; overflow-x: auto; /* ⬅️ Más espacio entre miniaturas */
+      margin-bottom: 14px; /* ⬅️ Más espacio abajo */
+      padding-bottom: 4px; flex-shrink: 0;
     }
     .miniatura {
-      width: 55px; height: 55px;
+      width: 60px; height: 60px; /* ⬅️ Miniaturas también más grandes */
       border-radius: 8px; object-fit: cover;
       cursor: pointer; border: 3px solid transparent; flex-shrink: 0;
     }
     .miniatura.activa { border-color: #0066ff; }
     .detalle-precio {
-      font-size: 24px; font-weight: bold; color: var(--verde);
-      margin-bottom: 4px;
+      font-size: 26px; font-weight: bold; color: var(--verde);
+      margin-bottom: 10px; /* ⬅️ Espacio mayor abajo */
       flex-shrink: 0;
     }
+    /* ✅ DESCRIPCIÓN AMPLIADA — 5-6 líneas visibles */
     .detalle-descripcion {
-      font-size: 14px; color: var(--texto-secundario); line-height: 1.4;
-      min-height: auto;
-      max-height: 180px;
+      font-size: 15px; color: var(--texto-secundario); line-height: 1.5;
+      min-height: 120px; /* ⬅️ Suficiente para 5-6 líneas */
+      max-height: 150px; /* ⬅️ Más altura */
       overflow-y: auto;
-      padding: 6px 8px;
+      padding: 10px 12px; /* ⬅️ Más padding interno */
       background: var(--fondo-pagina); border-radius: 8px;
       border-left: 4px solid #0066ff;
-      margin-bottom: 6px;
+      margin-bottom: 18px; /* ⬅️ Más espacio antes de botones */
       flex-shrink: 0;
     }
+    /* ✅ BOTONES MÁS ARRIBA — no tan abajo */
     .contenedor-botones {
-      display: flex; gap: 8px; width: 100%;
-      margin-top: auto;
-      padding-top: 6px;
+      display: flex; gap: 10px; width: 100%;
+      margin-top: 0; /* ⬅️ Quitamos el auto para que no queden al fondo */
+      padding-top: 0;
       flex-shrink: 0;
     }
     .btn {
-      flex: 1; padding: 10px 4px;
+      flex: 1; padding: 12px 6px; /* ⬅️ Botones un poquito más altos */
       border-radius: 50px; border: none;
       font-weight: bold; font-size: 13px; cursor: pointer; text-decoration: none;
       display: flex; align-items: center; justify-content: center; gap: 3px; color: #fff;
@@ -254,40 +258,41 @@
     .btn-ubicacion { background: #0066ff; }
     .logo-whatsapp { width: 18px; height: 18px; flex-shrink: 0; }
 
-    /* ===== TERCERA PANTALLA ===== */
+    /* ===== TERCERA PANTALLA — MAPA MÁS GRANDE ===== */
     #pantallaMapa {
       display: none; flex-direction: column; min-height: 100vh;
     }
     .mapa-card {
-      background: var(--fondo-tarjeta); border-radius: 16px; padding: 10px; margin: 5px;
+      background: var(--fondo-tarjeta); border-radius: 16px; padding: 12px; margin: 5px;
       border-left: 5px solid #0066ff;
       display: flex; flex-direction: column;
       min-height: 100vh;
     }
     .mapa-titulo {
       font-size: 18px; font-weight: bold; color: var(--texto-primario);
-      text-align: center; margin-bottom: 6px; flex-shrink: 0;
+      text-align: center; margin-bottom: 8px; flex-shrink: 0;
     }
     .mapa-direccion {
       font-size: 14px; color: var(--texto-secundario); text-align: center;
-      margin-bottom: 10px; padding: 10px; background: var(--fondo-pagina);
+      margin-bottom: 12px; padding: 10px; background: var(--fondo-pagina);
       border-radius: 8px; flex-shrink: 0;
     }
+    /* ✅ MAPA MÁS GRANDE — 580px */
     .mapa-iframe {
       width: 100%;
       flex: none;
-      height: 500px !important;
-      min-height: 500px;
-      max-height: 500px;
+      height: 580px !important; /* ⬅️ Antes 500px — MÁS GRANDE */
+      min-height: 580px;
+      max-height: 580px;
       border-radius: 12px;
       border: 2px solid var(--borde-item);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       flex-shrink: 0;
     }
     .botones-mapa-linea {
-      display: flex; gap: 8px; width: 100%;
-      margin-top: auto;
-      padding-top: 6px;
+      display: flex; gap: 10px; width: 100%;
+      margin-top: 0; /* ⬅️ Botones también más arriba */
+      padding-top: 0;
       flex-shrink: 0;
     }
     .btn-mapa {
@@ -311,26 +316,27 @@
       .buscador { width: 50%; font-size: 12px; padding: 4px 8px; margin: 6px auto 5px; }
       .grid-productos { gap: 8px; }
       .item-foto { height: 140px; }
-      .contenedor-foto { height: 30vh; min-height: 160px; }
+      /* Responsive segunda pantalla */
+      .contenedor-foto { height: 42vh; min-height: 220px; }
+      .detalle-descripcion { min-height: 100px; max-height: 130px; font-size: 14px; }
       .btn, .btn-mapa { font-size: 11px; padding: 10px 3px; gap: 2px; }
       .btn-regresar-mapa { font-size: 11px; }
-      .miniatura { width: 50px; height: 50px; }
+      .miniatura { width: 52px; height: 52px; }
       .detalle-precio { font-size: 22px; }
-      .detalle-descripcion { font-size: 13px; max-height: 60px; }
-      .mapa-iframe { height: 420px !important; min-height: 420px; }
+      /* ✅ Mapa en celular también más grande */
+      .mapa-iframe { height: 480px !important; min-height: 480px; }
     }
 
     @media (min-width: 600px) {
       .grid-productos { grid-template-columns: repeat(3, 1fr); gap: 15px; }
       .item-foto { height: 180px; }
-      .mapa-iframe { height: 500px !important; }
+      .mapa-iframe { height: 580px !important; }
     }
   </style>
 </head>
 <body>
 
 <div id="pantallaLista">
-  <!-- ✅ BARRA DE TÍTULO — CÍRCULOS ARRIBA ALINEADOS -->
   <div class="encabezado-tienda">
     <div class="circulo-rotativo">
       <img id="imagenCirculo" src="" alt="Producto">
@@ -346,7 +352,6 @@
     </div>
   </div>
 
-  <!-- ✅ BUSCADOR Y PRODUCTOS — JUSTO DESPUÉS DE LA BARRA, SIN ESPACIO EXTRA -->
   <input type="text" id="buscador" class="buscador" placeholder="🔍 Buscar...">
   <div class="contador-general" id="contadorGeneral">Productos: 0</div>
   <div class="contenedor-lista">
