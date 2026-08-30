@@ -9,57 +9,31 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
 
     :root {
-      --fondo-pagina: #f8f9fa;
-      --fondo-tarjeta: #ffffff;
-      --texto-primario: #1e293b;
-      --texto-secundario: #475569;
-      --borde-logo: #0891b2;
-      --borde-logo-fondo: #cffafe;
-      --borde-item: #e2e8f0;
-      --borde-item-hover: #0891b2;
-      --fondo-item-hover: #cffafe;
-      --fondo-item-seleccionado: #cffafe;
-      --franja-azul: #0891b2;
-      --borde-detalle: #0891b2;
-      --fondo-descripcion: #f8f9fa;
-      --sombra: rgba(0,0,0,0.08);
-      --sombra-hover: rgba(0,0,0,0.12);
-      --cian-oscuro: #0891b2;
-      --celeste-claro: #cffafe;
-      --flecha-fondo: rgba(0,0,0,0.4);
-      --flecha-hover: rgba(0,0,0,0.6);
+      --fondo-pagina: #f8f9fa; --fondo-tarjeta: #ffffff;
+      --texto-primario: #1e293b; --texto-secundario: #64748b;
+      --borde-logo: #0891b2; --borde-logo-fondo: #cffafe;
+      --borde-item: #e2e8f0; --borde-item-hover: #0891b2;
+      --fondo-item-hover: #f0f9ff; --cian-oscuro: #0891b2;
+      --rojo: #dc2626; --verde: #16a34a;
+      --sombra-suave: 0 2px 8px rgba(0,0,0,0.06);
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --fondo-pagina: #0f172a;
-        --fondo-tarjeta: #1e293b;
-        --texto-primario: #f1f5f9;
-        --texto-secundario: #cbd5e1;
-        --borde-logo: #22d3ee;
-        --borde-logo-fondo: #164e63;
-        --borde-item: #334155;
-        --borde-item-hover: #22d3ee;
-        --fondo-item-hover: #1e293b;
-        --fondo-item-seleccionado: #1e293b;
-        --franja-azul: #22d3ee;
-        --borde-detalle: #22d3ee;
-        --fondo-descripcion: #334155;
-        --sombra: rgba(0,0,0,0.3);
-        --sombra-hover: rgba(0,0,0,0.4);
-        --cian-oscuro: #155e75;
-        --celeste-claro: #164e63;
-        --flecha-fondo: rgba(0,0,0,0.5);
-        --flecha-hover: rgba(0,0,0,0.7);
+        --fondo-pagina: #0f172a; --fondo-tarjeta: #1e293b;
+        --texto-primario: #f1f5f9; --texto-secundario: #94a3b8;
+        --borde-logo: #22d3ee; --borde-logo-fondo: #164e63;
+        --borde-item: #334155; --borde-item-hover: #22d3ee;
+        --fondo-item-hover: #1e293b; --cian-oscuro: #155e75;
+        --sombra-suave: 0 2px 8px rgba(0,0,0,0.2);
       }
     }
 
-    body {
+    html, body {
       background: var(--fondo-pagina);
-      padding: 5px;
       max-width: 800px;
       margin: 0 auto;
-      transition: background 0.3s ease;
+      min-height: 100vh;
     }
 
     .encabezado-tienda {
@@ -67,610 +41,213 @@
       color: white;
       padding: 8px 15px;
       border-radius: 12px;
-      margin-bottom: 2px;
+      margin: 5px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       min-height: 55px;
       position: relative;
-      z-index: 2;
     }
-
-    .icono-zapato {
-      font-size: 34px;
-      line-height: 1;
-      flex-shrink: 0;
-      filter: drop-shadow(0 0 8px rgba(255,255,255,0.25));
-      position: relative;
-      z-index: 3;
-    }
-
-    .titulo-tienda {
-      position: absolute;
-      left: 80px;
-      right: 130px;
-      padding: 0;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .titulo-principal {
-      font-size: 22px;
-      font-weight: bold;
-      letter-spacing: 2px;
-      line-height: 1.2;
-    }
-
-    .titulo-secundario {
-      font-size: 13px;
-      opacity: 0.9;
-      line-height: 1.2;
-    }
-
+    .icono-zapato { font-size: 30px; z-index: 2; position: relative; }
+    .titulo-tienda { position: absolute; left: 55px; right: 95px; text-align: center; }
+    .titulo-principal { font-size: 18px; font-weight: bold; }
+    .titulo-secundario { font-size: 11px; opacity: 0.9; }
     .logo-principal {
-      width: 112px;
-      height: 112px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border-radius: 50%;
-      border: 4px solid var(--borde-logo);
-      background: var(--borde-logo-fondo);
-      transition: all 0.3s ease;
-      flex-shrink: 0;
-      position: absolute;
-      right: 15px;
-      top: -5px;
-      z-index: 10;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--borde-logo);
+      background: var(--borde-logo-fondo); position: absolute; right: 8px; top: -5px; overflow: hidden;
     }
-
-    .logo-principal img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .logo-principal img { width: 100%; height: 100%; object-fit: cover; }
 
     #pantallaLista { display: block; }
     #pantallaDetalle { display: none; }
     #pantallaMapa { display: none; }
 
     .buscador {
-      width: calc(100% - 120px);
-      padding: 10px 12px;
-      margin: 0 auto 5px auto;
-      border: 2px solid var(--borde-item);
-      border-radius: 10px;
-      font-size: 16px;
-      outline: none;
-      transition: border-color 0.2s;
-      background: var(--fondo-tarjeta);
-      color: var(--texto-primario);
-      position: relative;
-      z-index: 1;
-      display: block;
+      width: calc(100% - 10px); padding: 10px 14px; margin: 0 5px 10px;
+      border: 2px solid var(--borde-item); border-radius: 12px; font-size: 15px;
+      background: var(--fondo-tarjeta); color: var(--texto-primario); outline: none;
     }
-
     .buscador:focus { border-color: var(--borde-item-hover); }
+    .contador-general { font-size: 13px; color: var(--cian-oscuro); font-weight: 600; margin: 0 10px 8px; }
+    .cargando { text-align: center; padding: 30px; color: var(--texto-secundario); font-size: 16px; }
+    .error-csv { color: var(--rojo); text-align: center; padding: 20px; }
 
-    .contador-general {
-      font-size: 14px;
-      color: var(--cian-oscuro);
-      font-weight: 600;
-      margin: 0 auto 5px auto;
-      width: calc(100% - 120px);
-      text-align: left;
-    }
-
-    .contenedor-lista {
-      max-height: calc(100vh - 200px);
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding-right: 4px;
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-
-    .contenedor-lista::-webkit-scrollbar {
-      width: 8px;
-    }
-    .contenedor-lista::-webkit-scrollbar-track {
-      background: var(--fondo-pagina);
-      border-radius: 4px;
-    }
-    .contenedor-lista::-webkit-scrollbar-thumb {
-      background: var(--cian-oscuro);
-      border-radius: 4px;
-      opacity: 0.6;
-    }
-    .contenedor-lista::-webkit-scrollbar-thumb:hover {
-      background: var(--borde-item-hover);
-    }
-
-    .item-producto {
-      display: flex;
-      align-items: center;
+    /* ===== LISTA EN 2 COLUMNAS — ESTILO TEMU / ALIEXPRESS ===== */
+    .contenedor-lista { padding: 0 5px; }
+    .grid-productos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
-      padding: 12px 14px;
-      margin: 6px 0;
-      border-radius: 12px;
+      padding-bottom: 20px;
+    }
+    .item-producto {
+      background: var(--fondo-tarjeta);
+      border-radius: 14px;
+      border: 1px solid var(--borde-item);
+      overflow: hidden;
       cursor: pointer;
       transition: all 0.25s ease;
-      background: var(--fondo-tarjeta);
-      border: 2px solid var(--borde-item);
-      border-left: 5px solid var(--franja-azul);
-      min-height: 70px;
-      position: relative;
-      margin-left: 5px;
-      margin-right: 5px;
-      width: calc(100% - 10px);
+      box-shadow: var(--sombra-suave);
     }
-
-    .item-producto.seleccionado {
-      background: var(--fondo-item-seleccionado);
-      border-color: var(--borde-item);
-      box-shadow: none;
-    }
-
     .item-producto:hover {
-      background: var(--fondo-item-hover);
-      border-color: var(--borde-item);
-      transform: translateX(3px);
-      box-shadow: 3px 3px 0 var(--borde-item-hover);
+      transform: translateY(-3px);
+      border-color: var(--borde-item-hover);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-
     .item-foto {
-      width: 55px;
-      height: 55px;
+      width: 100%;
+      height: 160px;
       object-fit: cover;
-      border-radius: 6px;
-      border: 2px solid var(--borde-item);
-      background: var(--fondo-pagina);
-      flex-shrink: 0;
+      background: #f0f0f0;
     }
-
-    .item-texto {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .item-nombre {
-      font-size: 15px;
+    .item-info { padding: 10px; }
+    .item-codigo {
+      font-size: 13px;
       font-weight: 600;
       color: var(--texto-primario);
-      line-height: 1.3;
+      margin-bottom: 6px;
     }
-
     .item-precio {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: bold;
-      color: #16a34a;
-      background: rgba(22, 163, 74, 0.1);
-      padding: 3px 12px;
-      border-radius: 12px;
-      white-space: nowrap;
-      align-self: flex-start;
-      line-height: 1.2;
+      color: var(--verde);
     }
 
+    /* ===== SEGUNDA VENTANA — DETALLE ===== */
+    #pantallaDetalle {
+      display: none; flex-direction: column; min-height: 100vh;
+    }
     .detalle-card {
-      background: var(--fondo-tarjeta);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 4px 16px var(--sombra);
-      position: relative;
-      overflow: hidden;
-      border-left: 5px solid var(--borde-detalle);
-      transition: all 0.3s ease;
-      margin: 0 10px;
+      background: var(--fondo-tarjeta); border-radius: 16px; padding: 10px; margin: 5px;
+      border-left: 5px solid var(--cian-oscuro); display: flex; flex-direction: column;
+      min-height: calc(100vh - 10px);
     }
-
     .contenedor-foto {
       position: relative;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 48vh; min-height: 260px; max-height: 380px;
+      margin-bottom: 10px; border-radius: 14px; overflow: hidden;
+      background: var(--fondo-pagina); width: 100%;
+      flex-shrink: 0;
     }
-
-    .foto-principal {
-      width: 100%;
-      height: 350px;
-      object-fit: contain;
-      border-radius: 12px;
-      background: var(--fondo-pagina);
-      border: 2px solid var(--borde-item);
-      display: block;
-    }
-
+    .foto-principal { width: 100%; height: 100%; object-fit: contain; }
     .btn-flecha {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--flecha-fondo);
-      color: white;
-      border: none;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      z-index: 5;
-      backdrop-filter: blur(4px);
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(0,0,0,0.5); color: #fff; border: none;
+      font-size: 22px; cursor: pointer; z-index: 2;
     }
-
-    .btn-flecha:hover {
-      background: var(--flecha-hover);
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    .btn-flecha.izquierda {
-      left: 10px;
-    }
-
-    .btn-flecha.derecha {
-      right: 10px;
-    }
-
+    .btn-flecha.izquierda { left: 8px; }
+    .btn-flecha.derecha { right: 8px; }
     .galeria-miniaturas {
-      display: flex;
-      gap: 12px;
-      overflow-x: auto;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
+      display: flex; gap: 6px; overflow-x: auto; margin-bottom: 8px;
+      padding-bottom: 2px; flex-shrink: 0;
     }
-
     .miniatura {
-      width: 90px;
-      height: 90px;
-      object-fit: cover;
-      border-radius: 10px;
-      cursor: pointer;
-      border: 3px solid transparent;
-      transition: all 0.2s;
-      background: var(--fondo-pagina);
+      width: 65px; height: 65px; border-radius: 8px; object-fit: cover;
+      cursor: pointer; border: 3px solid transparent; flex-shrink: 0;
     }
-
-    .miniatura:hover { border-color: var(--borde-item-hover); }
-    .miniatura.activa { border-color: var(--borde-detalle); box-shadow: 0 0 0 2px var(--borde-detalle); }
-
+    .miniatura.activa { border-color: var(--cian-oscuro); }
     .detalle-precio {
-      font-size: 34px;
-      font-weight: bold;
-      color: #16a34a;
-      margin-bottom: 15px;
+      font-size: 26px; font-weight: bold; color: var(--verde); margin-bottom: 8px;
+      flex-shrink: 0;
     }
-
     .detalle-descripcion {
-      font-size: 16px;
-      color: var(--texto-secundario);
-      line-height: 1.8;
-      margin-bottom: 25px;
-      padding: 15px;
-      background: var(--fondo-descripcion);
-      border-radius: 10px;
-      border-left: 4px solid var(--borde-detalle);
+      font-size: 14px; color: var(--texto-secundario); line-height: 1.5;
+      min-height: 90px; max-height: 120px; overflow-y: auto;
+      padding: 10px; background: var(--fondo-pagina); border-radius: 10px;
+      border-left: 4px solid var(--cian-oscuro); margin-bottom: 10px;
+      flex-shrink: 0;
     }
-
-    .btn-whatsapp {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: #25D366;
-      color: white;
-      text-decoration: none;
-      padding: 15px 24px;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 17px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      margin-bottom: 16px;
+    .contenedor-botones {
+      display: flex; gap: 6px; width: 100%; margin-top: auto; padding-top: 5px;
+      flex-shrink: 0;
     }
-
-    .btn-whatsapp:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    .btn {
+      flex: 1; padding: 12px 4px; border-radius: 50px; border: none;
+      font-weight: bold; font-size: 13px; cursor: pointer; text-decoration: none;
+      display: flex; align-items: center; justify-content: center; gap: 3px; color: #fff;
+      white-space: nowrap;
     }
+    .btn-regresar { background: var(--rojo); }
+    .btn-whatsapp { background: #25D366; }
+    .btn-ubicacion { background: var(--cian-oscuro); }
+    .logo-whatsapp { width: 18px; height: 18px; flex-shrink: 0; }
 
-    .logo-whatsapp { width: 24px; height: 24px; }
-
-    .contenedor-botones-inferiores {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      gap: 10px;
+    /* ===== TERCERA VENTANA — MAPA ===== */
+    #pantallaMapa {
+      display: none; flex-direction: column; min-height: 100vh;
     }
-
-    .btn-regresar {
-      background: #dc2626;
-      color: white;
-      border: none;
-      padding: 14px 20px;
-      border-radius: 50px;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.2s, transform 0.2s;
-      font-weight: 600;
-      flex: 1;
-    }
-
-    .btn-regresar .flecha {
-      font-size: 18px;
-      font-weight: 900;
-      line-height: 1;
-      transform: scaleX(1.5);
-    }
-
-    .btn-regresar:hover {
-      background: #b91c1c;
-      transform: translateX(-3px);
-    }
-
-    .btn-ubicacion {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: var(--cian-oscuro);
-      color: white;
-      text-decoration: none;
-      padding: 14px 20px;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 16px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: none;
-      cursor: pointer;
-      flex: 1;
-    }
-
-    .btn-ubicacion:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 15px rgba(8, 145, 178, 0.4);
-    }
-
-    .icono-mapa { font-size: 20px; }
-
     .mapa-card {
-      background: var(--fondo-tarjeta);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 4px 16px var(--sombra);
-      border-left: 5px solid var(--borde-detalle);
-      margin: 0 10px;
-      min-height: 85vh;
-      display: flex;
-      flex-direction: column;
+      background: var(--fondo-tarjeta); border-radius: 16px; padding: 10px; margin: 5px;
+      border-left: 5px solid var(--cian-oscuro); display: flex; flex-direction: column;
+      min-height: calc(100vh - 10px);
     }
-
     .mapa-titulo {
-      font-size: 20px;
-      font-weight: bold;
-      color: var(--texto-primario);
-      margin-bottom: 10px;
-      text-align: center;
+      font-size: 18px; font-weight: bold; color: var(--texto-primario);
+      text-align: center; margin-bottom: 6px; flex-shrink: 0;
     }
-
     .mapa-direccion {
-      font-size: 15px;
-      color: var(--texto-secundario);
-      margin-bottom: 15px;
-      text-align: center;
-      padding: 10px;
-      background: var(--fondo-descripcion);
-      border-radius: 8px;
+      font-size: 14px; color: var(--texto-secundario); text-align: center;
+      margin-bottom: 10px; padding: 10px; background: var(--fondo-pagina);
+      border-radius: 8px; flex-shrink: 0;
     }
-
     .mapa-iframe {
-      width: 100%;
-      height: 550px;
-      border-radius: 12px;
-      border: 2px solid var(--borde-item);
-      margin-bottom: 20px;
-      flex: 1;
+      width: 100%; flex: 1; min-height: 240px; border-radius: 12px;
+      border: 2px solid var(--borde-item); margin-bottom: 12px;
+    }
+    .botones-mapa-linea {
+      display: flex; gap: 8px; width: 100%; flex-shrink: 0;
+    }
+    .btn-mapa {
+      flex: 1; padding: 12px 6px; border-radius: 50px; border: none;
+      font-weight: bold; font-size: 13px; cursor: pointer; text-decoration: none;
+      display: flex; align-items: center; justify-content: center; gap: 4px; color: #fff;
+      white-space: nowrap;
+    }
+    .btn-ver-mapa { background: var(--cian-oscuro); flex: 1.2; }
+    .btn-regresar-mapa { 
+      background: var(--rojo); 
+      flex: 0.8;
+      font-size: 12px;
     }
 
-    .btn-abrir-mapa-externo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: var(--cian-oscuro);
-      color: white;
-      text-decoration: none;
-      padding: 14px 24px;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 16px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      margin-bottom: 12px;
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 380px) {
+      .grid-productos { gap: 8px; }
+      .item-foto { height: 140px; }
+      .contenedor-foto { height: 45vh; min-height: 240px; }
+      .btn, .btn-mapa { font-size: 11px; padding: 10px 3px; gap: 2px; }
+      .btn-regresar-mapa { font-size: 11px; }
+      .miniatura { width: 55px; height: 55px; }
+      .detalle-precio { font-size: 22px; }
+      .detalle-descripcion { font-size: 13px; min-height: 80px; }
     }
-
-    .btn-abrir-mapa-externo:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 15px rgba(8, 145, 178, 0.4);
-    }
-
-    .btn-regresar-mapa {
-      background: #dc2626;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 50px;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.2s, transform 0.2s;
-      font-weight: 600;
-      width: 100%;
-    }
-
-    .btn-regresar-mapa .flecha {
-      font-size: 18px;
-      font-weight: 900;
-      line-height: 1;
-      transform: scaleX(1.5);
-    }
-
-    .btn-regresar-mapa:hover {
-      background: #b91c1c;
-      transform: translateX(-3px);
-    }
-
-    @media (max-width: 600px) {
-      body { padding: 3px; }
-
-      .encabezado-tienda {
-        padding: 6px 12px;
-        min-height: 52px;
-        margin-bottom: 2px;
-      }
-
-      .icono-zapato {
-        font-size: 28px;
-      }
-
-      .titulo-tienda {
-        left: 60px;
-        right: 110px;
-      }
-
-      .titulo-principal {
-        font-size: 18px;
-      }
-
-      .titulo-secundario {
-        font-size: 11px;
-      }
-
-      .logo-principal {
-        width: 90px;
-        height: 90px;
-        right: 10px;
-        top: -5px;
-      }
-
-      .buscador {
-        width: calc(100% - 100px);
-        padding: 10px 12px;
-        margin-bottom: 5px;
-      }
-
-      .contador-general {
-        width: calc(100% - 100px);
-        margin-bottom: 5px;
-      }
-
-      .contenedor-lista {
-        max-height: calc(100vh - 190px);
-        padding-left: 8px;
-        padding-right: 8px;
-      }
-
-      .item-producto {
-        padding: 10px 12px;
-        margin: 5px 0;
-        min-height: 65px;
-        margin-left: 3px;
-        margin-right: 3px;
-        width: calc(100% - 6px);
-      }
-
-      .item-foto {
-        width: 50px;
-        height: 50px;
-      }
-
-      .item-nombre { font-size: 14px; }
-      .item-precio { font-size: 15px; padding: 2px 10px; }
-
-      .detalle-card {
-        margin: 0 8px;
-        padding: 16px;
-      }
-
-      .foto-principal { height: 260px; }
-      .miniatura { width: 75px; height: 75px; }
-      .detalle-precio { font-size: 28px; }
-      .btn-whatsapp { padding: 13px 20px; font-size: 16px; }
-
-      .btn-flecha {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-      }
-
-      .btn-regresar, .btn-ubicacion {
-        font-size: 15px;
-        padding: 12px 16px;
-        gap: 6px;
-      }
-
-      .btn-regresar .flecha, .icono-mapa {
-        font-size: 16px;
-      }
-
-      .mapa-card {
-        margin: 0 8px;
-        padding: 16px;
-        min-height: 90vh;
-      }
-
-      .mapa-iframe {
-        height: 400px;
-      }
-
-      .mapa-titulo { font-size: 18px; }
-      .mapa-direccion { font-size: 14px; }
+    @media (min-width: 600px) {
+      .grid-productos { grid-template-columns: repeat(3, 1fr); gap: 15px; }
+      .item-foto { height: 180px; }
     }
   </style>
 </head>
 <body>
 
-<div class="encabezado-tienda">
-  <div class="icono-zapato">👠</div>
-  <div class="titulo-tienda">
-    <div class="titulo-principal">GATO IMPORT</div>
-    <div class="titulo-secundario">CATÁLOGO DE PRODUCTOS</div>
-  </div>
-  <div class="logo-principal">
-    <img src="https://i.postimg.cc/pVYRXx7T/log.jpg" alt="Logo Tienda">
-  </div>
-</div>
-
 <div id="pantallaLista">
-  <input type="text" id="buscador" class="buscador" placeholder="🔍 Buscar producto...">
-  <div class="contador-general" id="contadorGeneral">Producto 1/3</div>
+  <div class="encabezado-tienda">
+    <span class="icono-zapato">👠</span>
+    <div class="titulo-tienda">
+      <div class="titulo-principal">GATO IMPORT</div>
+      <div class="titulo-secundario">CATÁLOGO DE PRODUCTOS</div>
+    </div>
+    <div class="logo-principal">
+      <img src="https://i.postimg.cc/pVYRXx7T/log.jpg" alt="Logo Tienda">
+    </div>
+  </div>
 
-  <div id="contenedorLista" class="contenedor-lista">
-    <div id="listaProductos"></div>
+  <input type="text" id="buscador" class="buscador" placeholder="🔍 Buscar por código...">
+  <div class="contador-general" id="contadorGeneral">Productos: 0</div>
+  <div class="contenedor-lista">
+    <div id="listaProductos" class="grid-productos">
+      <div class="cargando">⏳ Cargando productos...</div>
+    </div>
   </div>
 </div>
 
@@ -687,14 +264,13 @@
     <div id="detallePrecio" class="detalle-precio"></div>
     <p id="detalleDescripcion" class="detalle-descripcion"></p>
 
-    <a id="btnWhatsApp" class="btn-whatsapp" href="" target="_blank" rel="noopener noreferrer">
-      <img src="https://i.postimg.cc/63HQcgF6/pngegg.png" alt="WhatsApp" class="logo-whatsapp">
-      Consultar por WhatsApp
-    </a>
-
-    <div class="contenedor-botones-inferiores">
-      <button class="btn-regresar" onclick="regresarLista()"><span class="flecha">←</span> Regresar</button>
-      <button class="btn-ubicacion" onclick="abrirPantallaMapa()"><span class="icono-mapa">📍</span> Ubícanos</button>
+    <div class="contenedor-botones">
+      <button class="btn btn-regresar" onclick="regresarLista()"><span>←</span> Regresar</button>
+      <a id="btnWhatsApp" class="btn btn-whatsapp" href="" target="_blank" rel="noopener noreferrer">
+        <img src="https://i.postimg.cc/63HQcgF6/pngegg.png" alt="WhatsApp" class="logo-whatsapp">
+        WhatsApp
+      </a>
+      <button class="btn btn-ubicacion" onclick="abrirPantallaMapa()"><span>📍</span> Ubícanos</button>
     </div>
   </div>
 </div>
@@ -707,35 +283,29 @@
     <iframe
       class="mapa-iframe"
       loading="lazy"
-      src="https://www.google.com/maps?q=-8.078923,-79.004814&hl=es&z=17&output=embed">
+      src="https://www.google.com/maps?q=-8.078923,-79.004814&hl=es&z=16&output=embed">
     </iframe>
 
-    <a class="btn-abrir-mapa-externo"
-       href="geo:-8.078923,-79.004814?q=-8.078923,-79.004814(Gato+Import,+Tomas+Moscoso+994,+El+Porvenir,+Trujillo,+Per%C3%BA)"
-       target="_blank"
-       rel="noopener noreferrer">
-      <span class="icono-mapa">🗺️</span>
-      Abrir en Google Maps
-    </a>
-
-    <button class="btn-regresar-mapa" onclick="regresarDesdeMapa()">
-      <span class="flecha">←</span> Regresar
-    </button>
+    <div class="botones-mapa-linea">
+      <a class="btn-mapa btn-ver-mapa"
+         href="https://www.google.com/maps/search/?api=1&query=-8.078923,-79.004814"
+         target="_blank"
+         rel="noopener noreferrer">
+        🗺️ Google Maps
+      </a>
+      <button class="btn-mapa btn-regresar-mapa" onclick="regresarDesdeMapa()">
+        ← Regresar
+      </button>
+    </div>
   </div>
 </div>
 
 <script>
-const TEXTO_CSV = `
-id,nombre,precio,descripcion,telefono,foto1,foto2,foto3,foto4,foto5,foto6
-1,Zapato de Tacón Negro,S/ 89.00,Elegante zapato de tacón negro, ideal para eventos y ocasiones especiales. Material de cuero, tacón de 9cm.,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,https://i.postimg.cc/5tz4LjS3/0021.jpg,https://i.postimg.cc/Xv5jdXkm/0022.jpg,https://i.postimg.cc/d0CsrDjg/0023.jpg,,
-2,Zapato de Tacón Beige,S/ 95.00,Zapato de tacón color beige, muy versátil. Combina con todo tipo de vestimenta. Tacón de 8cm.,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,https://i.postimg.cc/5tz4LjS3/0021.jpg,,,
-3,Zapato de Tacón Rojo,S/ 105.00,Zapato de tacón rojo llamativo, para destacar en cualquier evento. Tacón de 10cm, suave y cómodo.,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,https://i.postimg.cc/5tz4LjS3/0021.jpg,https://i.postimg.cc/Xv5jdXkm/0022.jpg,,,
-4,Adorno 004,S/ 45.00,Descripción del producto 4,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,,,
-5,Adorno 005,S/ 55.00,Descripción del producto 5,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,,,
-6,Adorno 006,S/ 65.00,Descripción del producto 6,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,,,
-7,Adorno 007,S/ 75.00,Descripción del producto 7,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,,,
-8,Adorno 008,S/ 85.00,Descripción del producto 8,51925033823,https://i.postimg.cc/k5SJKDvp/producto1-Principal.jpg,,,,,
-`;
+// ==============================================
+// ⚙️ CONFIGURACIÓN — CAMBIA ESTA URL POR LA TUYA
+// ==============================================
+// Instrucciones abajo 👇
+const URL_CSV = "https://github.com/gatoimport12100-glitch/Catalogo/blob/4bb8dd5e04d8c6825ae6477e45ccdcb030c5c716/productos.csv";
 
 let productos = [];
 let productosFiltrados = [];
@@ -744,23 +314,43 @@ let indiceFotoActual = 0;
 let intervaloCarrusel = null;
 let pantallaAnterior = 'lista';
 
+// ✅ LEER CSV DESDE GITHUB
+async function cargarCSVDesdeGitHub() {
+  try {
+    const respuesta = await fetch(URL_CSV);
+    if (!respuesta.ok) throw new Error("No se pudo leer el archivo");
+    const textoCSV = await respuesta.text();
+    productos = parsearCSV(textoCSV);
+    productosFiltrados = [...productos];
+    mostrarLista();
+    configurarBuscador();
+  } catch (error) {
+    console.error("Error cargando CSV:", error);
+    document.getElementById('listaProductos').innerHTML = `
+      <div class="error-csv">
+        ⚠️ No se pudo cargar el archivo CSV.<br>
+        Verifica la URL en el código.
+      </div>
+    `;
+  }
+}
+
 function parsearCSV(texto) {
   const lineas = texto.trim().split('\n');
+  if (lineas.length < 2) return [];
   const encabezados = lineas[0].split(',').map(e => e.trim().toLowerCase());
   const lista = [];
-
   for (let i = 1; i < lineas.length; i++) {
     const valores = lineas[i].split(',').map(v => v.trim());
+    if (valores.length < 2) continue;
     const prod = {};
     encabezados.forEach((enc, idx) => prod[enc] = valores[idx] || '');
-
     prod.fotos = [];
     let colFoto = 1;
     while (prod[`foto${colFoto}`] && prod[`foto${colFoto}`] !== '') {
       prod.fotos.push(prod[`foto${colFoto}`]);
       colFoto++;
     }
-
     lista.push(prod);
   }
   return lista;
@@ -769,77 +359,47 @@ function parsearCSV(texto) {
 function mostrarLista() {
   const lista = document.getElementById('listaProductos');
   lista.innerHTML = '';
-
-  productosFiltrados.forEach((prod, index) => {
+  if (productosFiltrados.length === 0) {
+    lista.innerHTML = '<div class="cargando">No se encontraron productos</div>';
+    document.getElementById('contadorGeneral').textContent = 'Productos: 0';
+    return;
+  }
+  productosFiltrados.forEach((prod) => {
     const div = document.createElement('div');
     div.className = 'item-producto';
-    div.dataset.id = prod.id;
-
-    if (productoActual && productoActual.id === prod.id) {
-      div.classList.add('seleccionado');
-    }
-
     div.innerHTML = `
-      <img src="${prod.fotos[0] || ''}" class="item-foto" alt="${prod.nombre}">
-      <div class="item-texto">
-        <span class="item-nombre">${prod.nombre || 'Sin nombre'}</span>
-        <span class="item-precio">${prod.precio || ''}</span>
+      <img src="${prod.fotos[0] || ''}" class="item-foto" alt="${prod.nombre}" loading="lazy">
+      <div class="item-info">
+        <div class="item-codigo">${prod.nombre || 'SIN-COD'}</div>
+        <div class="item-precio">${prod.precio || ''}</div>
       </div>
     `;
-
-    div.onclick = () => {
-      seleccionarUnProducto(prod);
-      abrirDetalle(prod, index + 1);
-    };
-
+    div.onclick = () => { seleccionarUnProducto(prod); abrirDetalle(prod); };
     lista.appendChild(div);
   });
-
-  document.getElementById('contadorGeneral').textContent = `Producto ${productosFiltrados.length > 0 ? '1' : '0'}/${productosFiltrados.length}`;
+  document.getElementById('contadorGeneral').textContent = `Productos: ${productosFiltrados.length}`;
 }
 
-function seleccionarUnProducto(prod) {
-  productoActual = prod;
-
-  document.querySelectorAll('.item-producto').forEach(item => {
-    item.classList.remove('seleccionado');
-  });
-
-  const itemSeleccionado = document.querySelector(`.item-producto[data-id="${prod.id}"]`);
-  if (itemSeleccionado) {
-    itemSeleccionado.classList.add('seleccionado');
-  }
-}
+function seleccionarUnProducto(prod) { productoActual = prod; }
 
 function iniciarCarrusel() {
   detenerCarrusel();
   indiceFotoActual = 0;
-
   if (!productoActual || productoActual.fotos.length <= 1) return;
-
   intervaloCarrusel = setInterval(() => {
     indiceFotoActual++;
-    if (indiceFotoActual >= productoActual.fotos.length) {
-      indiceFotoActual = 0;
-    }
+    if (indiceFotoActual >= productoActual.fotos.length) indiceFotoActual = 0;
     cambiarFotoPrincipal(productoActual.fotos[indiceFotoActual], indiceFotoActual);
-  }, 4000); // ⏱️ Cambia cada 4 segundos
+  }, 4000);
 }
 
-function detenerCarrusel() {
-  if (intervaloCarrusel) {
-    clearInterval(intervaloCarrusel);
-    intervaloCarrusel = null;
-  }
-}
+function detenerCarrusel() { if (intervaloCarrusel) { clearInterval(intervaloCarrusel); intervaloCarrusel = null; } }
 
 function fotoAnterior() {
   if (!productoActual || productoActual.fotos.length === 0) return;
   detenerCarrusel();
   indiceFotoActual--;
-  if (indiceFotoActual < 0) {
-    indiceFotoActual = productoActual.fotos.length - 1;
-  }
+  if (indiceFotoActual < 0) indiceFotoActual = productoActual.fotos.length - 1;
   cambiarFotoPrincipal(productoActual.fotos[indiceFotoActual], indiceFotoActual);
 }
 
@@ -847,26 +407,30 @@ function fotoSiguiente() {
   if (!productoActual || productoActual.fotos.length === 0) return;
   detenerCarrusel();
   indiceFotoActual++;
-  if (indiceFotoActual >= productoActual.fotos.length) {
-    indiceFotoActual = 0;
-  }
+  if (indiceFotoActual >= productoActual.fotos.length) indiceFotoActual = 0;
   cambiarFotoPrincipal(productoActual.fotos[indiceFotoActual], indiceFotoActual);
 }
 
-function abrirDetalle(prod, numero) {
+function cambiarFotoPrincipal(foto, indiceActiva) {
+  if (!productoActual) return;
+  document.getElementById('fotoGrande').src = foto;
+  indiceFotoActual = indiceActiva;
+  document.querySelectorAll('.miniatura').forEach((m, i) => {
+    i === indiceActiva ? m.classList.add('activa') : m.classList.remove('activa');
+  });
+}
+
+function abrirDetalle(prod) {
   productoActual = prod;
   indiceFotoActual = 0;
   pantallaAnterior = 'lista';
-
   document.getElementById('pantallaLista').style.display = 'none';
-  document.getElementById('pantallaDetalle').style.display = 'block';
+  document.getElementById('pantallaDetalle').style.display = 'flex';
   document.getElementById('pantallaMapa').style.display = 'none';
 
   document.getElementById('detallePrecio').textContent = prod.precio || '';
   document.getElementById('detalleDescripcion').textContent = prod.descripcion || '';
-
-  const fotoPrincipal = prod.fotos[0] || '';
-  document.getElementById('fotoGrande').src = fotoPrincipal;
+  document.getElementById('fotoGrande').src = prod.fotos[0] || '';
 
   const galeria = document.getElementById('galeriaMiniaturas');
   galeria.innerHTML = '';
@@ -874,32 +438,22 @@ function abrirDetalle(prod, numero) {
     const img = document.createElement('img');
     img.src = foto;
     img.className = `miniatura ${index === 0 ? 'activa' : ''}`;
-    img.onclick = () => {
-      detenerCarrusel();
-      cambiarFotoPrincipal(foto, index);
-    };
+    img.onclick = () => { detenerCarrusel(); cambiarFotoPrincipal(foto, index); };
     galeria.appendChild(img);
   });
 
   const tel = prod.telefono || '51925033823';
-  const mensaje = encodeURIComponent(`Hola, me interesa el producto: ${prod.nombre} — ${prod.precio} ¿Está disponible?`);
+  const mensaje = encodeURIComponent(
+    `¡Hola! Me interesa este producto:\n\n` +
+    `📦 Código: ${prod.nombre}\n` +
+    `💰 Precio: ${prod.precio}\n` +
+    `📝 Descripción: ${prod.descripcion}\n\n` +
+    `¿Está disponible? ¡Gracias! 🛒`
+  );
   document.getElementById('btnWhatsApp').href = `https://wa.me/${tel}?text=${mensaje}`;
 
   iniciarCarrusel();
   window.scrollTo(0, 0);
-}
-
-function cambiarFotoPrincipal(foto, indiceActiva) {
-  if (!productoActual) return;
-
-  document.getElementById('fotoGrande').src = foto;
-  indiceFotoActual = indiceActiva;
-
-  const miniaturas = document.querySelectorAll('.miniatura');
-  miniaturas.forEach((m, i) => {
-    if (i === indiceActiva) m.classList.add('activa');
-    else m.classList.remove('activa');
-  });
 }
 
 function regresarLista() {
@@ -916,14 +470,14 @@ function abrirPantallaMapa() {
   detenerCarrusel();
   document.getElementById('pantallaLista').style.display = 'none';
   document.getElementById('pantallaDetalle').style.display = 'none';
-  document.getElementById('pantallaMapa').style.display = 'block';
+  document.getElementById('pantallaMapa').style.display = 'flex';
   window.scrollTo(0, 0);
 }
 
 function regresarDesdeMapa() {
   if (pantallaAnterior === 'detalle' && productoActual) {
     document.getElementById('pantallaMapa').style.display = 'none';
-    document.getElementById('pantallaDetalle').style.display = 'block';
+    document.getElementById('pantallaDetalle').style.display = 'flex';
     iniciarCarrusel();
   } else {
     regresarLista();
@@ -932,26 +486,19 @@ function regresarDesdeMapa() {
 }
 
 function configurarBuscador() {
-  const buscador = document.getElementById('buscador');
-  buscador.addEventListener('input', (e) => {
-    const texto = e.target.value.toLowerCase().trim();
+  document.getElementById('buscador').addEventListener('input', (e) => {
+    const texto = e.target.value.toUpperCase().trim();
     productosFiltrados = productos.filter(prod =>
-      (prod.nombre && prod.nombre.toLowerCase().includes(texto)) ||
-      (prod.precio && prod.precio.toLowerCase().includes(texto))
+      (prod.nombre && prod.nombre.toUpperCase().includes(texto)) ||
+      (prod.precio && prod.precio.includes(texto))
     );
     mostrarLista();
   });
 }
 
-function iniciar() {
-  productos = parsearCSV(TEXTO_CSV);
-  productosFiltrados = [...productos];
-  mostrarLista();
-  configurarBuscador();
-}
-
-document.addEventListener('DOMContentLoaded', iniciar);
+document.addEventListener('DOMContentLoaded', cargarCSVDesdeGitHub);
 </script>
 
 </body>
 </html>
+
