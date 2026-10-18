@@ -14,7 +14,7 @@
       --borde-logo-fondo: rgba(255,255,255,0.2);
       --borde-item: #e2e8f0; --borde-item-hover: #0066ff;
       --fondo-item-hover: #e6f0ff; --color-primario: #0066ff;
-      --rojo: #dc2626; --verde: #16a34a;
+      --rojo: #dc2626; --verde: #16a34a; --naranja: #f97316;
       --sombra-suave: 0 2px 8px rgba(0,0,0,0.06);
       --tamano-logo: 85px;
     }
@@ -36,7 +36,7 @@
       min-height: 100vh;
     }
 
-    /* ===== ENCABEZADO — BARRA DE TÍTULO ===== */
+    /* ===== ENCABEZADO ===== */
     .encabezado-tienda {
       background: var(--color-primario);
       color: white;
@@ -53,7 +53,6 @@
       box-shadow: 0 2px 4px rgba(0,102,255,0.2);
     }
 
-    /* ===== CÍRCULO IZQUIERDO — ALINEADO ARRIBA CON LA BARRA ===== */
     .circulo-rotativo {
       width: var(--tamano-logo);
       height: var(--tamano-logo);
@@ -74,7 +73,6 @@
       transition: opacity 0.5s ease;
     }
 
-    /* ===== TÍTULO ===== */
     .titulo-tienda {
       position: absolute;
       left: calc(var(--tamano-logo) + 12px);
@@ -86,7 +84,6 @@
     .titulo-principal { font-size: 18px; font-weight: bold; line-height: 1.2; }
     .titulo-secundario { font-size: 11px; opacity: 0.9; line-height: 1.2; margin-top: 1px; }
 
-    /* ===== LOGO DERECHO — ALINEADO ARRIBA ===== */
     .logo-principal {
       width: var(--tamano-logo);
       height: var(--tamano-logo);
@@ -106,7 +103,26 @@
     #pantallaDetalle { display: none; }
     #pantallaMapa { display: none; }
 
-    /* ===== BUSCADOR — PEGADO JUSTO DESPUÉS DE LA BARRA ===== */
+    /* ===== ETIQUETA AGOTADO ===== */
+    .contenedor-imagen {
+      position: relative;
+      width: 100%;
+    }
+    .etiqueta-agotado {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--rojo);
+      color: white;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 4px;
+      z-index: 2;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    /* ===== BUSCADOR ===== */
     .buscador {
       width: 55%;
       max-width: 300px;
@@ -161,6 +177,9 @@
       border-color: #0066ff;
       box-shadow: 0 4px 12px rgba(0,102,255,0.15);
     }
+    .item-producto.agotado-item {
+      opacity: 0.85;
+    }
     .item-foto {
       width: 100%;
       height: 160px;
@@ -179,8 +198,12 @@
       font-weight: bold;
       color: var(--verde);
     }
+    .precio-tachado {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
 
-    /* ===== SEGUNDA PANTALLA — IMAGEN MÁS GRANDE ===== */
+    /* ===== PANTALLA DETALLE ===== */
     #pantallaDetalle {
       display: none; flex-direction: column; min-height: 100vh;
     }
@@ -190,13 +213,22 @@
       display: flex; flex-direction: column;
       min-height: 100vh;
     }
-    /* ✅ IMAGEN MÁS GRANDE — 50vh, sin límite de altura */
+    .etiqueta-agotado-grande {
+      display: inline-block;
+      background: var(--rojo);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 6px 16px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
     .contenedor-foto {
       position: relative;
-      height: 50vh; /* ⬅️ MÁS GRANDE: antes 34vh */
-      min-height: 260px; /* ⬅️ Más alto */
-      max-height: none; /* ⬅️ Sin límite máximo */
-      margin-bottom: 12px; /* ⬅️ Más espacio abajo */
+      height: 50vh;
+      min-height: 260px;
+      max-height: none;
+      margin-bottom: 12px;
       border-radius: 14px; overflow: hidden;
       background: var(--fondo-pagina); width: 100%;
       flex-shrink: 0;
@@ -204,7 +236,7 @@
     .foto-principal { width: 100%; height: 100%; object-fit: contain; }
     .btn-flecha {
       position: absolute; top: 50%; transform: translateY(-50%);
-      width: 42px; height: 42px; /* ⬅️ Flechas un poquito más grandes */
+      width: 42px; height: 42px;
       border-radius: 50%;
       background: rgba(0,0,0,0.5); color: #fff; border: none;
       font-size: 22px; cursor: pointer; z-index: 2;
@@ -212,53 +244,53 @@
     .btn-flecha.izquierda { left: 8px; }
     .btn-flecha.derecha { right: 8px; }
     .galeria-miniaturas {
-      display: flex; gap: 8px; overflow-x: auto; /* ⬅️ Más espacio entre miniaturas */
-      margin-bottom: 14px; /* ⬅️ Más espacio abajo */
+      display: flex; gap: 8px; overflow-x: auto;
+      margin-bottom: 14px;
       padding-bottom: 4px; flex-shrink: 0;
     }
     .miniatura {
-      width: 60px; height: 60px; /* ⬅️ Miniaturas también más grandes */
+      width: 60px; height: 60px;
       border-radius: 8px; object-fit: cover;
       cursor: pointer; border: 3px solid transparent; flex-shrink: 0;
     }
     .miniatura.activa { border-color: #0066ff; }
     .detalle-precio {
       font-size: 26px; font-weight: bold; color: var(--verde);
-      margin-bottom: 10px; /* ⬅️ Espacio mayor abajo */
+      margin-bottom: 10px;
       flex-shrink: 0;
     }
-    /* ✅ DESCRIPCIÓN AMPLIADA — 5-6 líneas visibles */
     .detalle-descripcion {
       font-size: 15px; color: var(--texto-secundario); line-height: 1.5;
-      min-height: 120px; /* ⬅️ Suficiente para 5-6 líneas */
-      max-height: 150px; /* ⬅️ Más altura */
+      min-height: 120px;
+      max-height: 150px;
       overflow-y: auto;
-      padding: 10px 12px; /* ⬅️ Más padding interno */
+      padding: 10px 12px;
       background: var(--fondo-pagina); border-radius: 8px;
       border-left: 4px solid #0066ff;
-      margin-bottom: 18px; /* ⬅️ Más espacio antes de botones */
+      margin-bottom: 18px;
       flex-shrink: 0;
     }
-    /* ✅ BOTONES MÁS ARRIBA — no tan abajo */
     .contenedor-botones {
       display: flex; gap: 10px; width: 100%;
-      margin-top: 0; /* ⬅️ Quitamos el auto para que no queden al fondo */
+      margin-top: 0;
       padding-top: 0;
       flex-shrink: 0;
     }
     .btn {
-      flex: 1; padding: 12px 6px; /* ⬅️ Botones un poquito más altos */
+      flex: 1; padding: 12px 6px;
       border-radius: 50px; border: none;
       font-weight: bold; font-size: 13px; cursor: pointer; text-decoration: none;
       display: flex; align-items: center; justify-content: center; gap: 3px; color: #fff;
       white-space: nowrap;
     }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-regresar { background: var(--rojo); }
     .btn-whatsapp { background: #25D366; }
+    .btn-whatsapp:disabled { background: #86c99c; }
     .btn-ubicacion { background: #0066ff; }
     .logo-whatsapp { width: 18px; height: 18px; flex-shrink: 0; }
 
-    /* ===== TERCERA PANTALLA — MAPA MÁS GRANDE ===== */
+    /* ===== PANTALLA MAPA ===== */
     #pantallaMapa {
       display: none; flex-direction: column; min-height: 100vh;
     }
@@ -277,11 +309,10 @@
       margin-bottom: 12px; padding: 10px; background: var(--fondo-pagina);
       border-radius: 8px; flex-shrink: 0;
     }
-    /* ✅ MAPA MÁS GRANDE — 580px */
     .mapa-iframe {
       width: 100%;
       flex: none;
-      height: 540px !important; /* ⬅️ Antes 500px — MÁS GRANDE */
+      height: 540px !important;
       min-height: 540px;
       max-height: 540px;
       border-radius: 12px;
@@ -291,7 +322,7 @@
     }
     .botones-mapa-linea {
       display: flex; gap: 10px; width: 100%;
-      margin-top: 0; /* ⬅️ Botones también más arriba */
+      margin-top: 0;
       padding-top: 0;
       flex-shrink: 0;
     }
@@ -316,14 +347,12 @@
       .buscador { width: 50%; font-size: 12px; padding: 4px 8px; margin: 6px auto 5px; }
       .grid-productos { gap: 8px; }
       .item-foto { height: 140px; }
-      /* Responsive segunda pantalla */
       .contenedor-foto { height: 42vh; min-height: 220px; }
       .detalle-descripcion { min-height: 100px; max-height: 130px; font-size: 14px; }
       .btn, .btn-mapa { font-size: 11px; padding: 10px 3px; gap: 2px; }
       .btn-regresar-mapa { font-size: 11px; }
       .miniatura { width: 52px; height: 52px; }
       .detalle-precio { font-size: 22px; }
-      /* ✅ Mapa en celular también más grande */
       .mapa-iframe { height: 480px !important; min-height: 480px; }
     }
 
@@ -369,6 +398,10 @@
       <button class="btn-flecha derecha" onclick="fotoSiguiente()">›</button>
     </div>
 
+    <div id="etiquetaAgotado" style="display: none;">
+      <span class="etiqueta-agotado-grande">⚠️ AGOTADO — No disponible</span>
+    </div>
+
     <div id="galeriaMiniaturas" class="galeria-miniaturas"></div>
 
     <div id="detallePrecio" class="detalle-precio"></div>
@@ -378,7 +411,7 @@
       <button class="btn btn-regresar" onclick="regresarLista()"><span>←</span> Regresar</button>
       <a id="btnWhatsApp" class="btn btn-whatsapp" href="" target="_blank" rel="noopener noreferrer">
         <img src="https://i.postimg.cc/63HQcgF6/pngegg.png" alt="WhatsApp" class="logo-whatsapp">
-        WhatsApp
+        Consultar
       </a>
       <button class="btn btn-ubicacion" onclick="abrirPantallaMapa()"><span>📍</span> Ubícanos</button>
     </div>
@@ -429,7 +462,7 @@ function iniciarCambioCirculo() {
   
   todasLasFotosCirculo = [];
   productos.forEach(prod => {
-    if (prod.fotos && prod.fotos.length > 0) {
+    if (prod.fotos && prod.fotos.length > 0 && prod.agotado !== 'si') {
       prod.fotos.forEach(foto => todasLasFotosCirculo.push(foto));
     }
   });
@@ -506,13 +539,17 @@ function mostrarLista() {
     return;
   }
   productosFiltrados.forEach((prod) => {
+    const estaAgotado = prod.agotado && prod.agotado.toLowerCase() === 'si';
     const div = document.createElement('div');
-    div.className = 'item-producto';
+    div.className = `item-producto ${estaAgotado ? 'agotado-item' : ''}`;
     div.innerHTML = `
-      <img src="${prod.fotos[0] || ''}" class="item-foto" alt="${prod.nombre}" loading="lazy">
+      <div class="contenedor-imagen">
+        <img src="${prod.fotos[0] || ''}" class="item-foto" alt="${prod.nombre}" loading="lazy">
+        ${estaAgotado ? '<span class="etiqueta-agotado">AGOTADO</span>' : ''}
+      </div>
       <div class="item-info">
         <div class="item-codigo">${prod.nombre || 'SIN-COD'}</div>
-        <div class="item-precio">${prod.precio || ''}</div>
+        <div class="item-precio ${estaAgotado ? 'precio-tachado' : ''}">${prod.precio || ''}</div>
       </div>
     `;
     div.onclick = () => { seleccionarUnProducto(prod); abrirDetalle(prod); };
@@ -565,9 +602,15 @@ function abrirDetalle(prod) {
   productoActual = prod;
   indiceFotoActual = 0;
   pantallaAnterior = 'lista';
+  
+  const estaAgotado = prod.agotado && prod.agotado.toLowerCase() === 'si';
+  
   document.getElementById('pantallaLista').style.display = 'none';
   document.getElementById('pantallaDetalle').style.display = 'flex';
   document.getElementById('pantallaMapa').style.display = 'none';
+
+  // Mostrar u ocultar etiqueta de agotado
+  document.getElementById('etiquetaAgotado').style.display = estaAgotado ? 'block' : 'none';
 
   document.getElementById('detallePrecio').textContent = prod.precio || '';
   document.getElementById('detalleDescripcion').textContent = prod.descripcion || '';
@@ -584,14 +627,24 @@ function abrirDetalle(prod) {
   });
 
   const tel = prod.telefono || '51925033823';
-  const mensaje = encodeURIComponent(
-    `¡Hola! Me interesa este producto:\n\n` +
-    `📦 Código: ${prod.nombre}\n` +
-    `💰 Precio: ${prod.precio}\n` +
-    `📝 Descripción: ${prod.descripcion}\n\n` +
-    `¿Está disponible?`
-  );
-  document.getElementById('btnWhatsApp').href = `https://wa.me/${tel}?text=${mensaje}`;
+  const btnWhatsApp = document.getElementById('btnWhatsApp');
+  
+  if (estaAgotado) {
+    btnWhatsApp.removeAttribute('href');
+    btnWhatsApp.style.pointerEvents = 'none';
+    btnWhatsApp.style.opacity = '0.5';
+  } else {
+    const mensaje = encodeURIComponent(
+      `¡Hola! Me interesa este producto:\n\n` +
+      `📦 Código: ${prod.nombre}\n` +
+      `💰 Precio: ${prod.precio}\n` +
+      `📝 Descripción: ${prod.descripcion}\n\n` +
+      `¿Está disponible?`
+    );
+    btnWhatsApp.href = `https://wa.me/${tel}?text=${mensaje}`;
+    btnWhatsApp.style.pointerEvents = 'auto';
+    btnWhatsApp.style.opacity = '1';
+  }
 
   iniciarCarrusel();
   window.scrollTo(0, 0);
